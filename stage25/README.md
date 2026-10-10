@@ -11,13 +11,13 @@ This stage adds a repeatable entry point for generating the schematic PDHQ scene
 ## Windows PowerShell example
 
 ```powershell
-blender -b --python stage25/build_stage25_scene.py -- --output build/pdhq_stage34_blockout.blend --log build/pdhq_stage34_build_report.json
+blender -b --python stage25/build_stage25_scene.py -- --output build/pdhq_stage35_blockout.blend --log build/pdhq_stage35_build_report.json
 ```
 
 If the target `.blend` already exists, the runner now refuses to overwrite it unless you explicitly opt in. To replace it while preserving a timestamped backup first:
 
 ```powershell
-blender -b --python stage25/build_stage25_scene.py -- --output build/pdhq_stage34_blockout.blend --log build/pdhq_stage34_build_report.json --overwrite
+blender -b --python stage25/build_stage25_scene.py -- --output build/pdhq_stage35_blockout.blend --log build/pdhq_stage35_build_report.json --overwrite
 ```
 
 Prefer a new versioned output filename for the first run. Stage 2 resets the scene objects and rebuilds the blockout, so only run the generator against a copy of any scene you want to preserve.
@@ -28,7 +28,7 @@ To generate without running the audit scripts:
 blender -b --python stage25/build_stage25_scene.py -- --output build/pdhq_stage25_blockout.blend --skip-audits
 ```
 
-The default run generates Stage 2, applies the Stage 26 slab-opening/vertical-circulation reconciliation, then generates Stages 3–4, branding/signage/detail and site-guide passes (7–15), then scene/layout/structural/room audits (5, 6, 16, 17, 27, 28, 29, 30), Stage 18 materials, and final export/performance/geometry/visibility audits (19–22), followed by the Stage 31 optimization/export manifest review and Stage 34 architecture/geometry review. Stage 34 records non-destructive geometry-review candidates and AABB overlap heuristics; inspect its report manually. Stage 23 remains a validator for a real exported FiveM resource folder, not a Blender generation step. Stage 24 checks repository readiness and is run as a standard Python script outside Blender.
+The default run generates Stage 2, applies the Stage 26 slab-opening/vertical-circulation reconciliation, then generates Stages 3–4, branding/signage/detail and site-guide passes (7–15), then scene/layout/structural/room audits (5, 6, 16, 17, 27, 28, 29, 30), Stage 18 materials, and final export/performance/geometry/visibility audits (19–22), followed by the Stage 31 optimization/export manifest review Stage 34 architecture/geometry review, and Stage 35 floor-by-floor coordination review. Stage 34 records non-destructive geometry-review candidates and AABB overlap heuristics; Stage 35 checks floor elevations, stair/elevator opening footprints, circulation guides, and helipad footprint containment. Inspect both reports manually. Stage 23 remains a validator for a real exported FiveM resource folder, not a Blender generation step. Stage 24 checks repository readiness and is run as a standard Python script outside Blender.
 
 ## Output and failure behavior
 
