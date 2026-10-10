@@ -69,7 +69,8 @@ def add_text(name, body, loc, size, mat):
     obj = bpy.data.objects.new(PREFIX + name, curve)
     collection.objects.link(obj)
     obj.location = loc
-    obj.rotation_euler = (1.57079632679, 0.0, 0.0)
+    # Default faces toward -Y; lobby's front-facing wall is viewed from +Y.
+    obj.rotation_euler = (-1.57079632679 if name.startswith("LOBBY_") else 1.57079632679, 0.0, 0.0)
     obj.data.materials.append(mat)
     return obj
 
@@ -80,7 +81,7 @@ for floor in range(FLOORS):
         add_box("F%d_CORRIDOR_%s_SKIRT" % (floor + 1, side),
                 (0, y, z + 0.12), (51.0, 0.07, 0.20), MAT_GRAPHITE)
         add_box("F%d_CORRIDOR_%s_ACCENT" % (floor + 1, side),
-                (0, y - (0.045 if side == "S" else -0.045), z + 0.25),
+                (0, y + (0.05 if side == "N" else -0.05), z + 0.25),
                 (51.0, 0.025, 0.035), MAT_ACCENT)
 
 # Lobby reception feature wall, located against the front-left solid wall segment.
@@ -110,7 +111,7 @@ for i, x in enumerate((-20.0, -16.0, -12.0)):
             (x, 18.55, FLOOR_H + 3.15), (1.6, 0.08, 0.18), MAT_ACCENT)
 for i, x in enumerate((-20.0, -17.5, -15.0, -12.5)):
     add_box("ARMORY_WALL_MARKER_%02d" % (i + 1),
-            (x, 6.5, FLOOR_H + 3.0), (0.95, 0.06, 0.12), MAT_ACCENT)
+            (-15.90, 5.5 + i * 1.0, FLOOR_H + 3.0), (0.06, 0.85, 0.12), MAT_ACCENT)
 
 # Detective floor: understated workstation-zone wall panels at the back wall.
 for i, x in enumerate((-10.0, -4.0, 2.0, 8.0, 14.0, 20.0)):
