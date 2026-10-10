@@ -19,3 +19,15 @@ Inspect exported assets in CodeWalker before deployment to catch asset, bounds, 
 
 ## Status boundary
 This stage defines the work package and acceptance gate. It is not complete until the real work and evidence exist. Do not claim production readiness without successful export, CodeWalker inspection and FiveM testing.
+
+## Automated Blender preflight
+
+Run this audit against the actual scene in Blender (not ordinary system Python):
+
+```bash
+blender --background build/pdhq_final.blend --python stage50/audit_stage50_collision_visibility.py -- --output build/stage50_collision_visibility.json
+```
+
+The report inventories meshes whose names suggest collision use, visibility-transition geometry, possible placeholder objects, missing material slots, zero scale components, loose geometry, and degenerate faces on collision-named candidates. It is read-only and writes a JSON report both to disk and to a Blender text datablock.
+
+**Important:** the audit is a review aid, not a collision or visibility fix. It does not generate Sollumz collision, MLO rooms/portals, occlusion, or map suppression. Review the findings in Blender/Sollumz and CodeWalker, then test the exported resource in FiveM with fresh joins, respawns, reconnects, and multiple clients.
