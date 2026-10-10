@@ -1,0 +1,40 @@
+name: Package Stage 2 Police HQ Blockout
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "stage2/**"
+      - ".github/workflows/stage2-package.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  package-stage2:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Validate expected Stage 2 files
+        run: |
+          test -f stage2/generate_stage2_blockout.py
+          test -f stage2/README.md
+          test -f stage2/STAGE2_SCOPE.md
+          test -f stage2/OPTIMIZATION_AND_TEST_CHECKLIST.md
+          python -m py_compile stage2/generate_stage2_blockout.py
+
+      - name: Create ZIP
+        run: |
+          mkdir -p dist
+          zip -r dist/fivem_police_hq_stage2_blockout.zip stage2
+
+      - name: Upload downloadable ZIP
+        uses: actions/upload-artifact@v4
+        with:
+          name: fivem-police-hq-stage2-blockout
+          path: dist/fivem_police_hq_stage2_blockout.zip
+          if-no-files-found: error
+          retention-days: 30
