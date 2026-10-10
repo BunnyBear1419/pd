@@ -218,6 +218,7 @@ jobs:
           test -f stage49/README.md
           test -f stage49/audit_stage49_55_release_gate.py
           test -f stage49/validate_export_manifest.py stage50/audit_stage50_collision_visibility.py stage51/audit_stage51_resource_deployment.py
+          test -f stage50/audit_stage50_collision_visibility.py stage51/audit_stage51_resource_deployment.py
           test -f stage50/README.md
           test -f stage50/audit_stage50_collision_visibility.py
           test -f stage51/README.md
