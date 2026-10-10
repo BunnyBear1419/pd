@@ -77,8 +77,8 @@ def main():
     project_files = [inspect_path(root, item) for item in REQUIRED_PROJECT_FILES]
     missing_project = [item["path"] for item in project_files if not item["exists"]]
     expected_outputs = [
-        "build/pdhq_stage31_blockout.blend",
-        "build/pdhq_stage31_build_report.json",
+        "build/pdhq_stage34_blockout.blend",
+        "build/pdhq_stage34_build_report.json",
         "resource/fxmanifest.lua",
         "resource/stream",
     ]
