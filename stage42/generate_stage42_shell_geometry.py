@@ -48,7 +48,8 @@ def main():
         finally: fp.unlink(missing_ok=True)
     doors=json.loads(Path(a.door_report).read_text(encoding="utf-8")) if Path(a.door_report).exists() else {}
     placements=[p for f in fit.get("floor_results",{}).values() for p in f.get("placements",[])]
-    placed={p["id"] for p in placements}; roomids={r["id"] for r in schedule["rooms"]}
+    placed={p["id"] for p in placements}; floor_roomids={r["id"] for r in schedule["rooms"] if r.get("floor") in (1,2,3)}
+    roof_roomids={r["id"] for r in schedule["rooms"] if r.get("floor") not in (1,2,3)}
     geom=[]; walls=defaultdict(list); cuts=defaultdict(list); door_list=[]
     def side(f,o,c,s,e):
         walls[(int(f),o,round(float(c),3))].append((float(s),float(e)))
@@ -94,10 +95,10 @@ def main():
             geom.append(box("vertical_core_placeholder","CorePlaceholder_"+r["id"],f,(p["x"]+p["width"]/2,p["y"]+p["depth"]/2,z+1.4),(min(1.8,p["width"]-0.4),min(2,p["depth"]-0.4),2.8),note="Replace with actual stair/elevator geometry"))
     out=Path(a.output); out.parent.mkdir(parents=True,exist_ok=True)
     report={"stage":42,"status":"schematic_shell_geometry_generated","units":"metres","wall_thickness_m":WALL_T,"wall_height_m":WALL_H,"door_opening_height_m":DOOR_H,
-            "room_count":len(roomids),"placed_room_count":len(placements),"unplaced_room_ids":sorted(roomids-placed),
+            "room_count":len(schedule["rooms"]),"placed_room_count":len(placements),"unplaced_floor_room_ids":sorted(floor_roomids-placed),"roof_room_ids_not_floor_fitted":sorted(roof_roomids),
             "counts":{"geometry_boxes":len(geom),"floor_slabs":sum(g["role"]=="floor_slab" for g in geom),"wall_segments":sum(g["role"]=="wall_segment" for g in geom),"door_lintels":sum(g["role"]=="door_lintel" for g in geom),"door_candidates":len(door_list)},
             "door_candidates":door_list,"geometry":geom,"blender_import_script":"stage42/build_stage42_shells_blender.py","production_ready":False,
             "limitations":["Schematic blockout only; no façade, windows, roof, furniture, UVs, materials, collision proxies, Sollumz archetypes or GTA export.","Stage 37 placement is not a reviewed architectural plan; inspect all geometry and clearances in Blender."]}
     out.write_text(json.dumps(report,indent=2)+"\n",encoding="utf-8")
-    print(json.dumps({"output":str(out),"counts":report["counts"],"unplaced_room_ids":report["unplaced_room_ids"],"production_ready":False},indent=2))
+    print(json.dumps({"output":str(out),"counts":report["counts"],"unplaced_floor_room_ids":report["unplaced_floor_room_ids"],"roof_room_ids_not_floor_fitted":report["roof_room_ids_not_floor_fitted"],"production_ready":False},indent=2))
 if __name__=="__main__": main()
