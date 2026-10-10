@@ -1,0 +1,603 @@
+{
+  "project": "Custom Modern FiveM Police Headquarters",
+  "stage": 36,
+  "units": "metres",
+  "footprint_reference": {
+    "width": 54,
+    "depth": 38,
+    "floors": 3,
+    "floor_to_floor_height": 4.2,
+    "front": "negative Y"
+  },
+  "status": "design_schedule_not_modeled_or_code_compliance_certified",
+  "planning_note": "Room dimensions are early net-clear planning targets. They are not surveyed dimensions, code determinations, structural engineering, or proof the current Blender blockout fits. Validate the total plan, door swings, accessible routes, security separation, and furniture in the actual model.",
+  "rooms": [
+    {
+      "id": "G01",
+      "floor": 1,
+      "name": "Public lobby and reception",
+      "use": "public_entry",
+      "dimensions_m": [
+        8,
+        7
+      ],
+      "door_clear_width_m": 1.8,
+      "zone": "public",
+      "adjacent_to": [
+        "G02",
+        "G03"
+      ],
+      "notes": "Visible reception sightline; keep public circulation separate from secure staff routes."
+    },
+    {
+      "id": "G02",
+      "floor": 1,
+      "name": "Report writing and public service counter",
+      "use": "reporting",
+      "dimensions_m": [
+        5,
+        5
+      ],
+      "door_clear_width_m": 1.2,
+      "zone": "public_controlled",
+      "adjacent_to": [
+        "G01",
+        "G04"
+      ]
+    },
+    {
+      "id": "G03",
+      "floor": 1,
+      "name": "Accessible public restroom",
+      "use": "public_wc",
+      "dimensions_m": [
+        3,
+        4
+      ],
+      "door_clear_width_m": 0.9,
+      "zone": "public",
+      "adjacent_to": [
+        "G01"
+      ]
+    },
+    {
+      "id": "G04",
+      "floor": 1,
+      "name": "Booking intake and secure transfer vestibule",
+      "use": "booking",
+      "dimensions_m": [
+        6,
+        5
+      ],
+      "door_clear_width_m": 1.2,
+      "zone": "secure",
+      "adjacent_to": [
+        "G02",
+        "G05",
+        "G06",
+        "G13"
+      ]
+    },
+    {
+      "id": "G05",
+      "floor": 1,
+      "name": "Processing, photography and fingerprinting",
+      "use": "processing",
+      "dimensions_m": [
+        5,
+        5
+      ],
+      "door_clear_width_m": 1,
+      "zone": "secure",
+      "adjacent_to": [
+        "G04",
+        "G06"
+      ]
+    },
+    {
+      "id": "G06",
+      "floor": 1,
+      "name": "Holding cell suite",
+      "use": "cells",
+      "dimensions_m": [
+        8,
+        7
+      ],
+      "door_clear_width_m": 1.1,
+      "zone": "high_security",
+      "adjacent_to": [
+        "G04",
+        "G05",
+        "G07"
+      ]
+    },
+    {
+      "id": "G07",
+      "floor": 1,
+      "name": "Detainee interview room A",
+      "use": "interview",
+      "dimensions_m": [
+        4,
+        4
+      ],
+      "door_clear_width_m": 0.9,
+      "zone": "secure",
+      "adjacent_to": [
+        "G06",
+        "G08"
+      ]
+    },
+    {
+      "id": "G08",
+      "floor": 1,
+      "name": "Detainee interview room B",
+      "use": "interview",
+      "dimensions_m": [
+        4,
+        4
+      ],
+      "door_clear_width_m": 0.9,
+      "zone": "secure",
+      "adjacent_to": [
+        "G07",
+        "G09"
+      ]
+    },
+    {
+      "id": "G09",
+      "floor": 1,
+      "name": "Evidence intake and logging",
+      "use": "evidence_intake",
+      "dimensions_m": [
+        5,
+        4
+      ],
+      "door_clear_width_m": 1,
+      "zone": "secure",
+      "adjacent_to": [
+        "G08",
+        "G10"
+      ]
+    },
+    {
+      "id": "G10",
+      "floor": 1,
+      "name": "Secure evidence storage",
+      "use": "evidence_vault",
+      "dimensions_m": [
+        7,
+        6
+      ],
+      "door_clear_width_m": 1,
+      "zone": "high_security",
+      "adjacent_to": [
+        "G09",
+        "G11"
+      ]
+    },
+    {
+      "id": "G11",
+      "floor": 1,
+      "name": "Armory and controlled equipment issue",
+      "use": "armory",
+      "dimensions_m": [
+        5,
+        5
+      ],
+      "door_clear_width_m": 1,
+      "zone": "high_security",
+      "adjacent_to": [
+        "G10",
+        "G12",
+        "G14"
+      ]
+    },
+    {
+      "id": "G12",
+      "floor": 1,
+      "name": "Patrol ready room and equipment",
+      "use": "patrol_support",
+      "dimensions_m": [
+        8,
+        6
+      ],
+      "door_clear_width_m": 1.2,
+      "zone": "staff_secure",
+      "adjacent_to": [
+        "G11",
+        "G13",
+        "G14"
+      ]
+    },
+    {
+      "id": "G13",
+      "floor": 1,
+      "name": "Secure detainee/vehicle transfer route",
+      "use": "secure_transfer",
+      "dimensions_m": [
+        3,
+        12
+      ],
+      "door_clear_width_m": 1.5,
+      "zone": "high_security",
+      "adjacent_to": [
+        "G04",
+        "G12",
+        "G14"
+      ]
+    },
+    {
+      "id": "G14",
+      "floor": 1,
+      "name": "Fleet garage and vehicle staging",
+      "use": "garage",
+      "dimensions_m": [
+        16,
+        18
+      ],
+      "door_clear_width_m": 4.5,
+      "zone": "vehicle_secure",
+      "adjacent_to": [
+        "G11",
+        "G12",
+        "G13"
+      ],
+      "notes": "Dimension for turning envelopes, accessible pedestrian walkway, and overhead door clear height before final stall count."
+    },
+    {
+      "id": "G15",
+      "floor": 1,
+      "name": "Main stair and elevator core",
+      "use": "vertical_core",
+      "dimensions_m": [
+        8,
+        8
+      ],
+      "door_clear_width_m": 1.2,
+      "zone": "staff_secure",
+      "adjacent_to": [
+        "G01",
+        "G12",
+        "F2-01",
+        "F3-08"
+      ]
+    },
+    {
+      "id": "F2-01",
+      "floor": 2,
+      "name": "Dispatch and communications room",
+      "use": "dispatch",
+      "dimensions_m": [
+        10,
+        8
+      ],
+      "door_clear_width_m": 1.2,
+      "zone": "restricted_staff",
+      "adjacent_to": [
+        "F2-02",
+        "F2-06",
+        "G15"
+      ]
+    },
+    {
+      "id": "F2-02",
+      "floor": 2,
+      "name": "Operations and incident coordination",
+      "use": "operations",
+      "dimensions_m": [
+        7,
+        6
+      ],
+      "door_clear_width_m": 1,
+      "zone": "restricted_staff",
+      "adjacent_to": [
+        "F2-01",
+        "F2-03",
+        "F2-06"
+      ]
+    },
+    {
+      "id": "F2-03",
+      "floor": 2,
+      "name": "Chief and command offices",
+      "use": "command",
+      "dimensions_m": [
+        5,
+        5
+      ],
+      "door_clear_width_m": 0.9,
+      "zone": "staff_secure",
+      "adjacent_to": [
+        "F2-02",
+        "F2-05"
+      ]
+    },
+    {
+      "id": "F2-04",
+      "floor": 2,
+      "name": "Detective workroom and case desks",
+      "use": "detectives",
+      "dimensions_m": [
+        12,
+        8
+      ],
+      "door_clear_width_m": 1.2,
+      "zone": "staff_secure",
+      "adjacent_to": [
+        "F2-05",
+        "F2-06",
+        "F2-07"
+      ]
+    },
+    {
+      "id": "F2-05",
+      "floor": 2,
+      "name": "Confidential interview room",
+      "use": "interview",
+      "dimensions_m": [
+        4,
+        4
+      ],
+      "door_clear_width_m": 0.9,
+      "zone": "restricted_staff",
+      "adjacent_to": [
+        "F2-03",
+        "F2-04"
+      ]
+    },
+    {
+      "id": "F2-06",
+      "floor": 2,
+      "name": "Briefing and conference room",
+      "use": "briefing",
+      "dimensions_m": [
+        7,
+        6
+      ],
+      "door_clear_width_m": 1.2,
+      "zone": "staff_secure",
+      "adjacent_to": [
+        "F2-01",
+        "F2-02",
+        "F2-04"
+      ]
+    },
+    {
+      "id": "F2-07",
+      "floor": 2,
+      "name": "IT and radio equipment room",
+      "use": "it_comms",
+      "dimensions_m": [
+        6,
+        5
+      ],
+      "door_clear_width_m": 0.9,
+      "zone": "restricted_staff",
+      "adjacent_to": [
+        "F2-04",
+        "F2-08"
+      ]
+    },
+    {
+      "id": "F2-08",
+      "floor": 2,
+      "name": "Staff restroom and support",
+      "use": "staff_wc",
+      "dimensions_m": [
+        3,
+        4
+      ],
+      "door_clear_width_m": 0.9,
+      "zone": "staff_secure",
+      "adjacent_to": [
+        "F2-07"
+      ]
+    },
+    {
+      "id": "F2-09",
+      "floor": 2,
+      "name": "Floor stair/elevator lobby",
+      "use": "vertical_core",
+      "dimensions_m": [
+        8,
+        8
+      ],
+      "door_clear_width_m": 1.2,
+      "zone": "staff_secure",
+      "adjacent_to": [
+        "F2-01",
+        "F2-04",
+        "F2-08"
+      ]
+    },
+    {
+      "id": "F3-01",
+      "floor": 3,
+      "name": "SWAT briefing and mission planning",
+      "use": "swat_briefing",
+      "dimensions_m": [
+        8,
+        7
+      ],
+      "door_clear_width_m": 1.2,
+      "zone": "restricted_staff",
+      "adjacent_to": [
+        "F3-02",
+        "F3-06",
+        "F3-08"
+      ]
+    },
+    {
+      "id": "F3-02",
+      "floor": 3,
+      "name": "SWAT tactical equipment and issue",
+      "use": "swat_gear",
+      "dimensions_m": [
+        6,
+        5
+      ],
+      "door_clear_width_m": 1,
+      "zone": "high_security",
+      "adjacent_to": [
+        "F3-01",
+        "F3-03"
+      ]
+    },
+    {
+      "id": "F3-03",
+      "floor": 3,
+      "name": "Staff locker room A",
+      "use": "locker",
+      "dimensions_m": [
+        7,
+        6
+      ],
+      "door_clear_width_m": 1,
+      "zone": "staff_secure",
+      "adjacent_to": [
+        "F3-02",
+        "F3-04"
+      ]
+    },
+    {
+      "id": "F3-04",
+      "floor": 3,
+      "name": "Staff locker room B",
+      "use": "locker",
+      "dimensions_m": [
+        7,
+        6
+      ],
+      "door_clear_width_m": 1,
+      "zone": "staff_secure",
+      "adjacent_to": [
+        "F3-03",
+        "F3-05"
+      ]
+    },
+    {
+      "id": "F3-05",
+      "floor": 3,
+      "name": "Showers and changing support",
+      "use": "showers",
+      "dimensions_m": [
+        5,
+        5
+      ],
+      "door_clear_width_m": 1,
+      "zone": "staff_secure",
+      "adjacent_to": [
+        "F3-04",
+        "F3-07"
+      ]
+    },
+    {
+      "id": "F3-06",
+      "floor": 3,
+      "name": "Fitness and physical readiness room",
+      "use": "fitness",
+      "dimensions_m": [
+        8,
+        6
+      ],
+      "door_clear_width_m": 1.2,
+      "zone": "staff_secure",
+      "adjacent_to": [
+        "F3-01",
+        "F3-07"
+      ]
+    },
+    {
+      "id": "F3-07",
+      "floor": 3,
+      "name": "Staff rest and quiet room",
+      "use": "staff_rest",
+      "dimensions_m": [
+        5,
+        4
+      ],
+      "door_clear_width_m": 0.9,
+      "zone": "staff_secure",
+      "adjacent_to": [
+        "F3-05",
+        "F3-06"
+      ]
+    },
+    {
+      "id": "F3-08",
+      "floor": 3,
+      "name": "Roof access stair/elevator lobby",
+      "use": "roof_access",
+      "dimensions_m": [
+        4,
+        5
+      ],
+      "door_clear_width_m": 1.2,
+      "zone": "restricted_staff",
+      "adjacent_to": [
+        "F3-01",
+        "F3-09"
+      ]
+    },
+    {
+      "id": "F3-09",
+      "floor": 3,
+      "name": "Tactical command and roof safety control",
+      "use": "tactical_command",
+      "dimensions_m": [
+        7,
+        6
+      ],
+      "door_clear_width_m": 1,
+      "zone": "restricted_staff",
+      "adjacent_to": [
+        "F3-08",
+        "F3-01"
+      ]
+    },
+    {
+      "id": "R01",
+      "floor": "roof",
+      "name": "Helipad landing zone and marked safety buffer",
+      "use": "helipad",
+      "dimensions_m": [
+        18,
+        18
+      ],
+      "door_clear_width_m": 0,
+      "zone": "airside_restricted",
+      "adjacent_to": [
+        "F3-08"
+      ],
+      "notes": "Confirm aircraft requirements, obstacle-free approach/departure, wind/lighting, edge protection, and structural loading with qualified specialists."
+    }
+  ],
+  "required_use_coverage": [
+    "public_entry",
+    "public_wc",
+    "booking",
+    "processing",
+    "cells",
+    "interview",
+    "evidence_intake",
+    "evidence_vault",
+    "armory",
+    "patrol_support",
+    "secure_transfer",
+    "garage",
+    "vertical_core",
+    "dispatch",
+    "command",
+    "detectives",
+    "briefing",
+    "it_comms",
+    "swat_briefing",
+    "swat_gear",
+    "locker",
+    "showers",
+    "fitness",
+    "roof_access",
+    "helipad"
+  ],
+  "door_width_screening_min_m": 0.8
+}
