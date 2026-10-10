@@ -1,21 +1,11 @@
-# Stage 49 — Sollumz asset authoring
+# Stages 49–55 — External export, QA and release gate
 
-## Purpose
-Convert approved geometry into valid GTA-compatible archetypes, materials and asset structures using a compatible Blender/Sollumz version.
+Run from the repository root:
 
-## Workflow
-1. Back up the last accepted Blender scene and exported resource.
-2. Use the approved outputs of Stages 36–38 as review references, not as authoritative construction plans.
-3. Complete the work in the real Blender/Sollumz/CodeWalker/FiveM toolchain.
-4. Run applicable audits, inspect findings manually, and retain evidence.
+```bash
+python stage49/audit_stage49_55_release_gate.py --output build/stage49_55_release_gate.json
+```
 
-## Acceptance checklist
-- [ ] Pin compatible tool versions
-- [ ] export required archetypes and transforms
-- [ ] include required assets
-- [ ] document repeatable export steps
-- [ ] Record tool versions, evidence, defects, reviewer and date.
-- [ ] Do not treat CI/package success as proof of external toolchain or in-game validity.
+The audit checks for the actual Blender scene, export manifest, FiveM manifest and stream directory, CodeWalker review, measured performance profile, multiplayer QA record, and release notes. Missing evidence is reported as a blocker; the script never fabricates validation or marks the MLO production-ready.
 
-## Status boundary
-This stage defines the work package and acceptance gate. It is not complete until the real work and evidence exist. Do not claim production readiness without successful export, CodeWalker inspection and FiveM testing.
+Stages 49–55 still require real Blender/Sollumz/CodeWalker/FiveM execution and human inspection. A successful GitHub workflow only verifies the repository tools/specification, not the in-game MLO.
