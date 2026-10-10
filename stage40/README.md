@@ -1,26 +1,15 @@
 # Stage 40 — Wall, opening and door coordination
 
-## Purpose
-Translate room rectangles into a wall/opening schedule before creating detailed Blender geometry. Account for wall thickness, door leaves, swing clearance, glazing and service penetrations.
+Stage 40 now includes an executable, review-only schedule generator.
 
-## Inputs
-- Approved Stage 36 room program and adjacency schedule.
-- Stage 37 fit-screen JSON and Stage 38 SVG previews.
-- The current Blender scene, reviewed and saved as a versioned copy.
+```bash
+python stage40/generate_stage40_wall_door_schedule.py --output build/stage40_wall_door_schedule.json
+```
 
-## Work sequence
-1. Review the current scene and record a baseline before editing.
-2. Make a small, reversible change set; preserve backups.
-3. Run relevant earlier audits and inspect the result visually.
-4. Record unresolved issues instead of silently accepting a heuristic pass.
-5. Do not export placeholders as production GTA assets.
+The script runs the Stage 37 fit screen, then compares the scheduled adjacency pairs against rectangle edges. It emits candidate door openings, perimeter-wall candidates, and explicit review items for unplaced rooms, non-touching adjacency pairs, and cross-floor links.
 
-## Acceptance criteria
-- [ ] Produce wall centerline/finish thickness conventions
-- [ ] coordinate door IDs and clear widths
-- [ ] resolve wall intersections
-- [ ] confirm door swings do not block routes
-- [ ] keep access-control boundaries explicit
+**Important:** these are schematic candidates, not actual wall geometry, construction drawings, accessibility/code certification, or proof that a door exists. Check the actual Blender scene, wall thickness, swing clearances, secure/public boundaries, and routes manually.
 
-## Status boundary
-This stage is a production work package and acceptance gate. Repository presence or CI success does not mean the Blender/Sollumz/CodeWalker/FiveM work has been performed. Do not mark complete until the required external evidence exists.
+## Stage 40–55 execution boundary
+
+Stages 41–48 define exterior, interior, equipment, lighting, materials, collision, geometry-budget and streaming requirements. Stages 49–55 require the real Blender/Sollumz/CodeWalker/FiveM toolchain and in-game evidence. CI can prepare and audit specifications, but cannot honestly certify those external steps from text files alone.
