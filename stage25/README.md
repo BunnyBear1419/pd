@@ -11,7 +11,7 @@ This stage adds a repeatable entry point for generating the schematic PDHQ scene
 ## Windows PowerShell example
 
 ```powershell
-blender -b --python stage25/build_stage25_scene.py -- --output build/pdhq_stage30_blockout.blend --log build/pdhq_stage30_build_report.json
+blender -b --python stage25/build_stage25_scene.py -- --output build/pdhq_stage31_blockout.blend --log build/pdhq_stage31_build_report.json
 ```
 
 To generate without running the audit scripts:
@@ -20,7 +20,7 @@ To generate without running the audit scripts:
 blender -b --python stage25/build_stage25_scene.py -- --output build/pdhq_stage25_blockout.blend --skip-audits
 ```
 
-The default run generates Stage 2, applies the Stage 26 slab-opening/vertical-circulation reconciliation, then generates Stages 3–4, branding/signage/detail and site-guide passes (7–15), then scene/layout/structural/room audits (5, 6, 16, 17, 27, 28, 29, 30), Stage 18 materials, and final export/performance/geometry/visibility audits (19–22). Stage 23 remains a validator for a real exported FiveM resource folder, not a Blender generation step. Stage 24 checks repository readiness and is run as a standard Python script outside Blender.
+The default run generates Stage 2, applies the Stage 26 slab-opening/vertical-circulation reconciliation, then generates Stages 3–4, branding/signage/detail and site-guide passes (7–15), then scene/layout/structural/room audits (5, 6, 16, 17, 27, 28, 29, 30), Stage 18 materials, and final export/performance/geometry/visibility audits (19–22), followed by the Stage 31 optimization/export manifest review. Stage 23 remains a validator for a real exported FiveM resource folder, not a Blender generation step. Stage 24 checks repository readiness and is run as a standard Python script outside Blender.
 
 ## Output and failure behavior
 
