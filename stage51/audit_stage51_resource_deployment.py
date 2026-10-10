@@ -84,7 +84,7 @@ def inspect_resource(root: Path, server_cfg: Path | None = None) -> dict:
         else:
             cfg_text = cfg.read_text(encoding="utf-8", errors="replace")
             resource_name = root.name.lower()
-            start_re = re.compile(r"^\s*(?:ensure|start)\s+['"]?" + re.escape(resource_name) + r"['"]?\s*(?:#.*)?$", re.I | re.M)
+            start_re = re.compile(r"""^\s*(?:ensure|start)\s+['"]?""" + re.escape(resource_name) + r"""['"]?\s*(?:#.*)?$""", re.I | re.M)
             started = bool(start_re.search(cfg_text))
             if not started:
                 warnings.append(f"server.cfg does not contain ensure/start {root.name}; add it after installing the resource.")
