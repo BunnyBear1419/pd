@@ -38,6 +38,7 @@ REQUIRED_FILES = {
     "Stage 28 garage/secure layout audit": "stage28/audit_stage28_garage_secure_layout.py",
     "Stage 29 room clearance audit": "stage29/audit_stage29_room_clearances.py",
     "Stage 30 exterior/helipad audit": "stage30/audit_stage30_exterior_helipad_clearance.py",
+    "Stage 31 optimization/export manifest audit": "stage31/audit_stage31_optimization_export_manifest.py",
     "Packaging workflow": ".github/workflows/stage2-package.yml",
 }
 REQUIRED_DOCS = {
@@ -54,6 +55,7 @@ REQUIRED_DOCS = {
     "Stage 28 garage/secure acceptance checklist": "stage28/GARAGE_SECURE_LAYOUT_ACCEPTANCE_CHECKLIST.md",
     "Stage 29 room/door clearance checklist": "stage29/ROOM_DIMENSIONS_DOOR_CLEARANCE_ACCEPTANCE_CHECKLIST.md",
     "Stage 30 exterior/helipad checklist": "stage30/EXTERIOR_SITE_EMERGENCY_ACCESS_HELIPAD_ACCEPTANCE_CHECKLIST.md",
+    "Stage 31 optimization/export manifest checklist": "stage31/OPTIMIZATION_AND_EXPORT_MANIFEST_CHECKLIST.md",
 }
 
 
@@ -65,7 +67,7 @@ def main():
     root = Path(args.root).expanduser().resolve()
     missing_files = [{"label": label, "path": path} for label, path in REQUIRED_FILES.items() if not (root / path).is_file()]
     missing_docs = [{"label": label, "path": path} for label, path in REQUIRED_DOCS.items() if not (root / path).is_file()]
-    stage_dirs = [f"stage{i}" for i in range(2, 31)]
+    stage_dirs = [f"stage{i}" for i in range(2, 32)]
     present_stages = [name for name in stage_dirs if (root / name).is_dir()]
     absent_stages = [name for name in stage_dirs if not (root / name).is_dir()]
     workflow_text = ""
@@ -77,6 +79,8 @@ def main():
         "mentions_stage28": "stage28/" in workflow_text,
         "mentions_stage29": "stage29/" in workflow_text,
         "mentions_stage30": "stage30/" in workflow_text,
+        "mentions_stage31": "stage31/" in workflow_text,
+        "includes_stage31_in_zip": "stage31" in workflow_text.split("- name: Create ZIP", 1)[-1],
         "includes_stage30_in_zip": "stage30" in workflow_text.split("- name: Create ZIP", 1)[-1],
         "includes_stage23_in_zip": "stage23\n" in workflow_text or "stage23" in workflow_text.split("- name: Create ZIP", 1)[-1],
         "artifact_upload_step_present": "actions/upload-artifact@v4" in workflow_text,
@@ -85,6 +89,7 @@ def main():
         {"gate": "Blender scene generated and visually inspected", "status": "NOT_VERIFIED_BY_REPOSITORY_AUDIT"},
         {"gate": "Room dimensions, Stage 26 slab openings, stairs, elevator, doors, and access reviewed", "status": "MANUAL_REVIEW_REQUIRED"},
         {"gate": "Temporary guide/proxy geometry separated from production assets", "status": "MANUAL_REVIEW_REQUIRED"},
+        {"gate": "Stage 31 export manifest reviewed and object dispositions approved", "status": "MANUAL_REVIEW_REQUIRED"},
         {"gate": "Sollumz export metadata, archetypes, portals, occlusion, collision, and LODs verified", "status": "EXTERNAL_TOOL_VALIDATION_REQUIRED"},
         {"gate": "CodeWalker inspection completed", "status": "EXTERNAL_TOOL_VALIDATION_REQUIRED"},
         {"gate": "Actual exported resource tested in FiveM with clean join/reconnect and multiple clients", "status": "IN_GAME_TEST_REQUIRED"},
