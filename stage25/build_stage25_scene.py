@@ -17,6 +17,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 GENERATION_STEPS = [
     ("Stage 2 blockout", "stage2/generate_stage2_blockout.py"),
+    ("Stage 26 vertical-circulation reconciliation", "stage26/reconcile_stage26_vertical_circulation.py"),
     ("Stage 3 interior partitions", "stage3/generate_stage3_interior.py"),
     ("Stage 4 furniture proxies", "stage4/generate_stage4_furnishing.py"),
     ("Stage 7 branding", "stage7/generate_stage7_branding.py"),
@@ -50,8 +51,8 @@ def parse_args():
     else:
         argv = []
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--output", default="build/pdhq_stage25_blockout.blend", help="Output .blend path")
-    parser.add_argument("--log", default="build/pdhq_stage25_build_report.json", help="Build report JSON path")
+    parser.add_argument("--output", default="build/pdhq_stage26_blockout.blend", help="Output .blend path")
+    parser.add_argument("--log", default="build/pdhq_stage26_build_report.json", help="Build report JSON path")
     parser.add_argument("--skip-audits", action="store_true", help="Skip audit scripts; generators still run")
     return parser.parse_args(argv)
 
@@ -82,7 +83,7 @@ def main():
         plan.extend(AUDIT_STEPS_AFTER_MATERIALS)
 
     report = {
-        "stage": 25,
+        "stage": 26,
         "started_utc": datetime.now(timezone.utc).isoformat(),
         "repository_root": str(ROOT),
         "output_blend": str(output),
@@ -103,7 +104,7 @@ def main():
             script = ROOT / relative
             if not script.is_file():
                 raise FileNotFoundError("Required build script is missing: " + str(script))
-            print("\n[PDHQ Stage 25] Running: " + label + " (" + relative + ")", flush=True)
+            print("\n[PDHQ Build] Running: " + label + " (" + relative + ")", flush=True)
             started = datetime.now(timezone.utc).isoformat()
             runpy.run_path(str(script), run_name="__main__")
             report["steps"].append({"label": label, "script": relative, "status": "SUCCESS", "finished_utc": datetime.now(timezone.utc).isoformat()})
@@ -111,7 +112,7 @@ def main():
 
         report["status"] = "BUILD_COMPLETED_REQUIRES_MANUAL_REVIEW"
         report["finished_utc"] = datetime.now(timezone.utc).isoformat()
-        block_name = "PDHQ_STAGE25_BUILD_REPORT"
+        block_name = "PDHQ_STAGE26_BUILD_REPORT"
         block = bpy.data.texts.get(block_name) or bpy.data.texts.new(block_name)
         block.clear()
         block.write(json.dumps(report, indent=2))
