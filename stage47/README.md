@@ -1,26 +1,21 @@
-# Stage 47 — LOD and geometry budget
+# Stage 47 — Geometry budget and LOD review
 
-## Purpose
-Create an evidence-based geometry budget and identify LOD candidates rather than relying on object count alone.
+Stage 47 creates a review plan from the Stage 42 shell and Stage 43 furniture blockout, plus a read-only Blender scene audit.
 
-## Inputs
-- Approved Stage 36 room program and adjacency schedule.
-- Stage 37 fit-screen JSON and Stage 38 SVG previews.
-- The current Blender scene, reviewed and saved as a versioned copy.
+## Files
+- `generate_stage47_geometry_lod_plan.py`: records schematic geometry counts, LOD guidance and the evidence needed before release.
+- `audit_stage47_blender_geometry.py`: run inside Blender to report evaluated triangle estimates, material-slot counts, missing UV layers, unusual object scale and high-poly review candidates.
 
-## Work sequence
-1. Review the current scene and record a baseline before editing.
-2. Make a small, reversible change set; preserve backups.
-3. Run relevant earlier audits and inspect the result visually.
-4. Record unresolved issues instead of silently accepting a heuristic pass.
-5. Do not export placeholders as production GTA assets.
+## Run planning report
+```bash
+python stage42/generate_stage42_shell_geometry.py --output build/stage42_shell_geometry.json
+python stage43/generate_stage43_furniture_blockout.py --spec build/stage41_48_design_spec.json --fit-report build/stage37_floor_fit.json --output build/stage43_furniture_blockout.json
+python stage47/generate_stage47_geometry_lod_plan.py --shell build/stage42_shell_geometry.json --furniture build/stage43_furniture_blockout.json --output build/stage47_geometry_lod_plan.json
+```
 
-## Acceptance criteria
-- [ ] Review high-poly objects
-- [ ] create appropriate LOD strategy where supported
-- [ ] remove hidden/internal faces when safe
-- [ ] verify silhouettes at distance
-- [ ] compare measured frame time and memory
+## Audit a real scene (read-only)
+```bash
+blender --background path/to/your_scene.blend --python stage47/audit_stage47_blender_geometry.py -- --output build/stage47_blender_geometry_audit.json
+```
 
-## Status boundary
-This stage is a production work package and acceptance gate. Repository presence or CI success does not mean the Blender/Sollumz/CodeWalker/FiveM work has been performed. Do not mark complete until the required external evidence exists.
+The Blender audit does not decimate meshes, delete hidden faces, create LODs or edit collision. Treat triangle/material thresholds as review prompts, not universal limits. Keep collision simpler than render geometry where feasible, and validate walkable surfaces, doorways, vehicle clearance, CodeWalker export, FiveM frame time and memory. Stage 47 remains not production-ready until the actual scene and in-game evidence have been reviewed.
