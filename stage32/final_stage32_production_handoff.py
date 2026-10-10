@@ -42,6 +42,7 @@ STAGE_FILES = {
     30: ["stage30/audit_stage30_exterior_helipad_clearance.py", "stage30/README.md"],
     31: ["stage31/audit_stage31_optimization_export_manifest.py", "stage31/README.md"],
     34: ["stage34/audit_stage34_architecture_geometry.py", "stage34/README.md", "stage34/ARCHITECTURE_GEOMETRY_ACCEPTANCE_CHECKLIST.md"],
+    35: ["stage35/audit_stage35_floor_coordination.py", "stage35/README.md", "stage35/FLOOR_COORDINATION_ACCEPTANCE_CHECKLIST.md"],
 }
 REQUIRED_PROJECT_FILES = [
     ".github/workflows/stage2-package.yml",
@@ -51,6 +52,7 @@ REQUIRED_PROJECT_FILES = [
     "stage32/README.md",
     "stage32/FINAL_PRODUCTION_HANDOFF_ACCEPTANCE_CHECKLIST.md",
     "stage34/ARCHITECTURE_GEOMETRY_ACCEPTANCE_CHECKLIST.md",
+    "stage35/FLOOR_COORDINATION_ACCEPTANCE_CHECKLIST.md",
 ]
 
 def inspect_path(root, relative):
@@ -77,14 +79,14 @@ def main():
     project_files = [inspect_path(root, item) for item in REQUIRED_PROJECT_FILES]
     missing_project = [item["path"] for item in project_files if not item["exists"]]
     expected_outputs = [
-        "build/pdhq_stage34_blockout.blend",
-        "build/pdhq_stage34_build_report.json",
+        "build/pdhq_stage35_blockout.blend",
+        "build/pdhq_stage35_build_report.json",
         "resource/fxmanifest.lua",
         "resource/stream",
     ]
     output_inventory = [inspect_path(root, item) for item in expected_outputs]
     missing_outputs = [item["path"] for item in output_inventory if not item["exists"]]
-    scene_exists = (root / "build/pdhq_stage31_blockout.blend").is_file()
+    scene_exists = (root / "build/pdhq_stage35_blockout.blend").is_file()
     resource_exists = (root / "resource/fxmanifest.lua").is_file() and (root / "resource/stream").is_dir()
 
     if missing_source or missing_project:
@@ -97,7 +99,7 @@ def main():
         status = "EXTERNAL_VALIDATION_REQUIRED"
 
     report = {
-        "stage": 34,
+        "stage": 35,
         "generated_utc": datetime.now(timezone.utc).isoformat(),
         "repository_root": str(root),
         "status": status,
