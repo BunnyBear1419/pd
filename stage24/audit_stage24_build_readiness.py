@@ -34,6 +34,7 @@ REQUIRED_FILES = {
     "Stage 23 resource validator": "stage23/validate_stage23_resource.py",
     "Stage 23 manifest template": "stage23/fxmanifest.lua.template",
     "Stage 26 vertical-circulation reconciliation": "stage26/reconcile_stage26_vertical_circulation.py",
+    "Stage 27 room circulation audit": "stage27/audit_stage27_room_circulation.py",
     "Packaging workflow": ".github/workflows/stage2-package.yml",
 }
 REQUIRED_DOCS = {
@@ -46,6 +47,7 @@ REQUIRED_DOCS = {
     "Stage 22 visibility/streaming checklist": "stage22/VISIBILITY_STREAMING_AND_MLO_CHECKLIST.md",
     "Stage 23 resource packaging checklist": "stage23/RESOURCE_PACKAGING_AND_INSTALL_CHECKLIST.md",
     "Stage 26 circulation acceptance checklist": "stage26/VERTICAL_CIRCULATION_ACCEPTANCE_CHECKLIST.md",
+    "Stage 27 circulation acceptance checklist": "stage27/ROOM_CIRCULATION_ACCEPTANCE_CHECKLIST.md",
 }
 
 
@@ -57,7 +59,7 @@ def main():
     root = Path(args.root).expanduser().resolve()
     missing_files = [{"label": label, "path": path} for label, path in REQUIRED_FILES.items() if not (root / path).is_file()]
     missing_docs = [{"label": label, "path": path} for label, path in REQUIRED_DOCS.items() if not (root / path).is_file()]
-    stage_dirs = [f"stage{i}" for i in range(2, 27)]
+    stage_dirs = [f"stage{i}" for i in range(2, 28)]
     present_stages = [name for name in stage_dirs if (root / name).is_dir()]
     absent_stages = [name for name in stage_dirs if not (root / name).is_dir()]
     workflow_text = ""
