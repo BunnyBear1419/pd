@@ -6,7 +6,6 @@ then converts solid stair/elevator core placeholders into non-solid guides.
 This is a schematic correction, not final structural engineering or an MLO.
 """
 import json
-from pathlib import Path
 
 import bpy
 
@@ -68,6 +67,11 @@ def rebuild_slab(original_name, z, collection_name):
     material = old.data.materials[0] if old and old.type == "MESH" and old.data.materials else None
     if old:
         bpy.data.objects.remove(old, do_unlink=True)
+    # Make this pass safe to rerun manually without stacking duplicate slab tiles.
+    tile_prefix = PREFIX + original_name + "_TILE_"
+    for obj in list(bpy.data.objects):
+        if obj.name.startswith(tile_prefix):
+            bpy.data.objects.remove(obj, do_unlink=True)
     col = get_collection(collection_name)
     count = 0
     for ix in range(len(X_BOUNDS) - 1):
