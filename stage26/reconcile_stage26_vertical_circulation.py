@@ -64,7 +64,7 @@ def in_opening(x, y):
 
 def rebuild_slab(original_name, z, collection_name):
     old = bpy.data.objects.get(PREFIX + original_name)
-    material = old.data.materials[0] if old and old.type == "MESH" and old.data.materials else None
+    material = old.data.materials[0] if old and old.type == "MESH" and old.data.materials else bpy.data.materials.get("MAT_Blockout_Roof" if original_name == "ROOF_DECK" else "MAT_Blockout_Concrete")
     if old:
         bpy.data.objects.remove(old, do_unlink=True)
     # Make this pass safe to rerun manually without stacking duplicate slab tiles.
@@ -103,9 +103,8 @@ def make_guide(name, location, dimensions, collection):
 
 
 def main():
-    structure = get_collection("PDHQ_STRUCTURE")
+    get_collection("PDHQ_STRUCTURE")
     interior = get_collection("PDHQ_INTERIOR_ZONES")
-    roof_collection = get_collection("PDHQ_ROOF_EQUIPMENT")
     for obj in list(bpy.data.objects):
         if obj.name in (PREFIX + "STAIR_CORE_MASS_-22.0", PREFIX + "STAIR_CORE_MASS_22.0", PREFIX + "ELEVATOR_SHAFT_MASS"):
             bpy.data.objects.remove(obj, do_unlink=True)
