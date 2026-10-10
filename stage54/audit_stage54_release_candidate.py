@@ -44,8 +44,8 @@ def audit(root: Path) -> dict:
     manifest_text = manifest_path.read_text(encoding="utf-8", errors="replace") if manifest_path.is_file() else ""
     evidence.append({"key": "resource_manifest_basics", "path": "resource/fxmanifest.lua",
                      "purpose": "Manifest has fx_version and game declarations",
-                     "present": bool(re.search(r"fx_version\\s*['\"]", manifest_text)
-                                     and re.search(r"game\\s*['\"]", manifest_text))})
+                     "present": bool(re.search(r"fx_version\s*['\"]", manifest_text)
+                                     and re.search(r"game\s*['\"]", manifest_text))})
     missing = [x["path"] for x in evidence if not x["present"]]
     return {
         "stage": 54,
@@ -92,7 +92,7 @@ def main() -> int:
     if not out.is_absolute():
         out = root / out
     out.parent.mkdir(parents=True, exist_ok=True)
-    out.write_text(json.dumps(result, indent=2) + "\\n", encoding="utf-8")
+    out.write_text(json.dumps(result, indent=2) + "\n", encoding="utf-8")
     print(json.dumps({"status": result["status"], "production_ready": False,
                       "missing_or_incomplete": result["missing_or_incomplete"],
                       "report": str(out)}, indent=2))
