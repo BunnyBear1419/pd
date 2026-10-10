@@ -3,10 +3,10 @@
 ## Build run
 
 - [ ] Clone the repository and install a compatible Blender release.
-- [ ] Run `blender -b --python stage25/build_stage25_scene.py -- --output build/pdhq_stage30_blockout.blend --log build/pdhq_stage30_build_report.json` from the repository root.
+- [ ] Run `blender -b --python stage25/build_stage25_scene.py -- --output build/pdhq_stage31_blockout.blend --log build/pdhq_stage31_build_report.json` from the repository root.
 - [ ] Confirm the command exits successfully and the JSON report says `BUILD_COMPLETED_REQUIRES_MANUAL_REVIEW`.
 - [ ] Open the saved `.blend` in Blender's UI and inspect the scene in perspective and top/orthographic views.
-- [ ] Read the audit report text blocks for scene/layout, structural circulation, room circulation, garage/secure layout, room/door/furniture clearance, exterior/helipad clearance, export preflight, LOD/performance, geometry cleanup, and visibility/streaming.
+- [ ] Read the audit report text blocks for scene/layout, structural circulation, room circulation, garage/secure layout, room/door/furniture clearance, exterior/helipad clearance, optimization/export manifest, export preflight, LOD/performance, geometry cleanup, and visibility/streaming.
 
 ## Geometry review before export
 
@@ -16,7 +16,7 @@
 - [ ] Verify garage doors, turning envelope, vehicle clearance, pedestrian path, and emergency/service access.
 - [ ] Verify site boundary, gate alignment, emergency vehicle approach, rooftop equipment conflicts, and helipad clearances.
 - [ ] Resolve intersecting signs, emblems, facade elements, interior finishes, furniture, and glass.
-- [ ] Identify guide/proxy/collision candidates; hide or exclude temporary guides from production export.
+- [ ] Identify guide/proxy/collision candidates; approve every export inclusion/exclusion manually. Never exclude temporary guides by name alone.
 - [ ] Review normals, topology, scale, materials, UVs, object origins, and collision geometry.
 
 ## Export and runtime acceptance
