@@ -30,7 +30,7 @@ def validate(data):
         if not isinstance(dims, list) or len(dims) != 2 or any(not isinstance(v, (int, float)) or v <= 0 for v in dims):
             errors.append(f"{rid}: dimensions_m must contain two positive numbers.")
         width = room.get("door_clear_width_m")
-        if not isinstance(width, (int, float)) or width < data.get("door_width_screening_min_m", 0.8):
+        if room.get("use") != "helipad" and (not isinstance(width, (int, float)) or width < data.get("door_width_screening_min_m", 0.8)):
             errors.append(f"{rid}: door clear width below screening minimum or missing.")
         uses.add(room.get("use"))
         for target in room.get("adjacent_to", []):
