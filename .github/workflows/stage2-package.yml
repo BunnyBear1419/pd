@@ -6,6 +6,7 @@ on:
     paths:
       - "stage2/**"
       - "stage3/**"
+      - "stage4/**"
       - ".github/workflows/stage2-package.yml"
   workflow_dispatch:
 
@@ -19,7 +20,7 @@ jobs:
       - name: Check out repository
         uses: actions/checkout@v4
 
-      - name: Validate Stage 2 and Stage 3 files
+      - name: Validate stage scripts and documentation
         run: |
           test -f stage2/generate_stage2_blockout.py
           test -f stage2/README.md
@@ -28,17 +29,20 @@ jobs:
           test -f stage3/generate_stage3_interior.py
           test -f stage3/README.md
           test -f stage3/ROOM_LAYOUT_AND_DOOR_SCHEDULE.md
-          python -m py_compile stage2/generate_stage2_blockout.py stage3/generate_stage3_interior.py
+          test -f stage4/generate_stage4_furnishing.py
+          test -f stage4/README.md
+          test -f stage4/FURNITURE_AND_EQUIPMENT_PLAN.md
+          python -m py_compile stage2/generate_stage2_blockout.py stage3/generate_stage3_interior.py stage4/generate_stage4_furnishing.py
 
       - name: Create ZIP
         run: |
           mkdir -p dist
-          zip -r dist/fivem_police_hq_stages_2_3.zip stage2 stage3
+          zip -r dist/fivem_police_hq_stages_2_3_4.zip stage2 stage3 stage4
 
       - name: Upload downloadable ZIP
         uses: actions/upload-artifact@v4
         with:
-          name: fivem-police-hq-stages-2-3
-          path: dist/fivem_police_hq_stages_2_3.zip
+          name: fivem-police-hq-stages-2-3-4
+          path: dist/fivem_police_hq_stages_2_3_4.zip
           if-no-files-found: error
           retention-days: 30
