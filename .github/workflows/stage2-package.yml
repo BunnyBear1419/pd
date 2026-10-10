@@ -217,9 +217,11 @@ jobs:
           test -f stage48/audit_stage48_pre_export.py
           test -f stage49/README.md
           test -f stage49/audit_stage49_55_release_gate.py
-          test -f stage49/validate_export_manifest.py stage50/audit_stage50_collision_visibility.py
+          test -f stage49/validate_export_manifest.py stage50/audit_stage50_collision_visibility.py stage51/audit_stage51_resource_deployment.py
           test -f stage50/README.md
           test -f stage50/audit_stage50_collision_visibility.py
+          test -f stage51/README.md
+          test -f stage51/audit_stage51_resource_deployment.py
           test -f stage51/README.md
           test -f stage52/README.md
           test -f stage53/README.md
@@ -325,6 +327,9 @@ jobs:
 
       - name: Self-test Stage 49 export manifest validator
         run: python stage49/validate_export_manifest.py --self-test
+
+      - name: Self-test Stage 51 resource deployment audit
+        run: python stage51/audit_stage51_resource_deployment.py --self-test
 
       - name: Audit Stage 49-55 external release evidence
         run: python stage49/audit_stage49_55_release_gate.py --output build/stage49_55_release_gate.json
