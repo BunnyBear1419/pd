@@ -33,6 +33,7 @@ REQUIRED_FILES = {
     "Stage 22 visibility/streaming audit": "stage22/audit_stage22_visibility_streaming.py",
     "Stage 23 resource validator": "stage23/validate_stage23_resource.py",
     "Stage 23 manifest template": "stage23/fxmanifest.lua.template",
+    "Stage 26 vertical-circulation reconciliation": "stage26/reconcile_stage26_vertical_circulation.py",
     "Packaging workflow": ".github/workflows/stage2-package.yml",
 }
 REQUIRED_DOCS = {
@@ -44,6 +45,7 @@ REQUIRED_DOCS = {
     "Stage 21 geometry cleanup checklist": "stage21/GEOMETRY_CLEANUP_AND_EXPORT_CHECKLIST.md",
     "Stage 22 visibility/streaming checklist": "stage22/VISIBILITY_STREAMING_AND_MLO_CHECKLIST.md",
     "Stage 23 resource packaging checklist": "stage23/RESOURCE_PACKAGING_AND_INSTALL_CHECKLIST.md",
+    "Stage 26 circulation acceptance checklist": "stage26/VERTICAL_CIRCULATION_ACCEPTANCE_CHECKLIST.md",
 }
 
 
@@ -55,7 +57,7 @@ def main():
     root = Path(args.root).expanduser().resolve()
     missing_files = [{"label": label, "path": path} for label, path in REQUIRED_FILES.items() if not (root / path).is_file()]
     missing_docs = [{"label": label, "path": path} for label, path in REQUIRED_DOCS.items() if not (root / path).is_file()]
-    stage_dirs = [f"stage{i}" for i in range(2, 25)]
+    stage_dirs = [f"stage{i}" for i in range(2, 27)]
     present_stages = [name for name in stage_dirs if (root / name).is_dir()]
     absent_stages = [name for name in stage_dirs if not (root / name).is_dir()]
     workflow_text = ""
@@ -69,7 +71,7 @@ def main():
     }
     production_gates = [
         {"gate": "Blender scene generated and visually inspected", "status": "NOT_VERIFIED_BY_REPOSITORY_AUDIT"},
-        {"gate": "Room dimensions, slab openings, stairs, elevator, doors, and access reviewed", "status": "MANUAL_REVIEW_REQUIRED"},
+        {"gate": "Room dimensions, Stage 26 slab openings, stairs, elevator, doors, and access reviewed", "status": "MANUAL_REVIEW_REQUIRED"},
         {"gate": "Temporary guide/proxy geometry separated from production assets", "status": "MANUAL_REVIEW_REQUIRED"},
         {"gate": "Sollumz export metadata, archetypes, portals, occlusion, collision, and LODs verified", "status": "EXTERNAL_TOOL_VALIDATION_REQUIRED"},
         {"gate": "CodeWalker inspection completed", "status": "EXTERNAL_TOOL_VALIDATION_REQUIRED"},
