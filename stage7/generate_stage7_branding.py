@@ -102,7 +102,7 @@ def create_lobby_plaque():
     x, y, z = 0.0, -17.8, 2.8
     make_box("LOBBY_PLAQUE_BACKPLATE", (x, y, z), (6.5, 0.12, 0.8), MAT_SIGN_BASE)
     make_text("LOBBY_PLAQUE", BRAND["short_name"] + "  |  " + BRAND["subtitle"],
-              (x, y-0.075, z), 0.38, (1.57079632679, 0.0, 0.0), MAT_TEXT)
+              (x, y+0.075, z), 0.38, (-1.57079632679, 0.0, 0.0), MAT_TEXT)
 
 create_front_sign()
 if BRAND["show_subtitle"]:
