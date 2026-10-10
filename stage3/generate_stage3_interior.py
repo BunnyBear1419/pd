@@ -46,6 +46,12 @@ interior = get_collection("PDHQ_INTERIOR_ZONES")
 guides = get_collection("PDHQ_GUIDES")
 clear_collection(interior)
 
+# Stage 3 can be re-run safely: remove only its own generated zone-label empties.
+# Preserve Stage 2's broader site/roof guides and any user-created guide objects.
+for obj in list(guides.objects):
+    if obj.name.startswith(PREFIX + "ZONE_F"):
+        bpy.data.objects.remove(obj, do_unlink=True)
+
 def move_to(obj, col):
     for old in list(obj.users_collection):
         old.objects.unlink(obj)
@@ -114,13 +120,15 @@ for sx in (-22.0, 22.0):
         base = floor * FLOOR_H
         # Two flights, each 12 steps, rise about 2.1 m, with a landing between.
         for flight in range(2):
-            start_y = -3.4 if flight == 0 else 0.4
+            # Lower flight climbs toward the central landing; upper flight
+            # returns in the opposite direction to meet the next floor.
+            start_y = -3.4 if flight == 0 else 3.4
             start_z = base + (0.0 if flight == 0 else 2.1)
-            direction = 1 if flight == 0 else 1
+            direction = 1 if flight == 0 else -1
             for step in range(12):
                 rise = 2.1 / 12.0
                 run = 0.29
-                y = start_y + step * run
+                y = start_y + direction * step * run
                 h = (step + 1) * rise
                 cube(f"STAIR_{sx}_F{floor+1}_FL{flight+1}_STEP{step+1}",
                      (sx, y, start_z + h/2), (2.0, run+0.02, h), MAT_STEP, interior)
