@@ -12,6 +12,7 @@ import runpy
 import sys
 import traceback
 from datetime import datetime, timezone
+import shutil
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -59,6 +60,7 @@ def parse_args():
     parser.add_argument("--output", default="build/pdhq_stage31_blockout.blend", help="Output .blend path")
     parser.add_argument("--log", default="build/pdhq_stage31_build_report.json", help="Build report JSON path")
     parser.add_argument("--skip-audits", action="store_true", help="Skip audit scripts; generators still run")
+    parser.add_argument("--overwrite", action="store_true", help="Allow replacing an existing output .blend; creates a timestamped backup first")
     return parser.parse_args(argv)
 
 
@@ -77,6 +79,22 @@ def main():
     log_path = Path(args.log).expanduser()
     if not log_path.is_absolute():
         log_path = (Path.cwd() / log_path).resolve()
+    if output == log_path:
+        raise ValueError("--output and --log must point to different files")
+    if output.exists() and not args.overwrite:
+        raise FileExistsError(
+            "Output already exists; refusing to overwrite it. Choose a new --output path "
+            "or pass --overwrite to create a timestamped backup first: " + str(output)
+        )
+    if output.exists() and args.overwrite:
+        stamp = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ")
+        backup = output.with_name(output.stem + ".backup-" + stamp + output.suffix)
+        suffix = 1
+        while backup.exists():
+            backup = output.with_name(output.stem + ".backup-" + stamp + "-" + str(suffix) + output.suffix)
+            suffix += 1
+        shutil.copy2(output, backup)
+        print("[PDHQ Build] Existing output backed up to: " + str(backup), flush=True)
     output.parent.mkdir(parents=True, exist_ok=True)
     log_path.parent.mkdir(parents=True, exist_ok=True)
 
@@ -93,6 +111,7 @@ def main():
         "repository_root": str(ROOT),
         "output_blend": str(output),
         "mode": "generation_only" if args.skip_audits else "generation_plus_non_destructive_audits",
+        "overwrite_allowed": bool(args.overwrite),
         "steps": [],
         "status": "RUNNING",
         "production_readiness": "NOT_CERTIFIED",
