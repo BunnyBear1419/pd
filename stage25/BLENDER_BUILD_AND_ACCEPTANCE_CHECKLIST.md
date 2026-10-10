@@ -3,10 +3,10 @@
 ## Build run
 
 - [ ] Clone the repository and install a compatible Blender release.
-- [ ] Run `blender -b --python stage25/build_stage25_scene.py -- --output build/pdhq_stage25_blockout.blend --log build/pdhq_stage25_build_report.json` from the repository root.
+- [ ] Run `blender -b --python stage25/build_stage25_scene.py -- --output build/pdhq_stage29_blockout.blend --log build/pdhq_stage29_build_report.json` from the repository root.
 - [ ] Confirm the command exits successfully and the JSON report says `BUILD_COMPLETED_REQUIRES_MANUAL_REVIEW`.
 - [ ] Open the saved `.blend` in Blender's UI and inspect the scene in perspective and top/orthographic views.
-- [ ] Read the audit report text blocks for scene/layout, structural circulation, room circulation, export preflight, LOD/performance, geometry cleanup, and visibility/streaming.
+- [ ] Read the audit report text blocks for scene/layout, structural circulation, room circulation, garage/secure layout, room/door/furniture clearance, export preflight, LOD/performance, geometry cleanup, and visibility/streaming.
 
 ## Geometry review before export
 
