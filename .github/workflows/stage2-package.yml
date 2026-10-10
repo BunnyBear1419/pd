@@ -21,6 +21,7 @@ on:
       - "stage16/**"
       - "stage17/**"
       - "stage18/**"
+      - "stage19/**"
       - ".github/workflows/stage2-package.yml"
   workflow_dispatch:
 
@@ -88,17 +89,20 @@ jobs:
           test -f stage18/generate_stage18_materials.py
           test -f stage18/README.md
           test -f stage18/MATERIAL_LIBRARY_AND_SURFACE_PLAN.md
-          python -m py_compile stage2/generate_stage2_blockout.py stage3/generate_stage3_interior.py stage4/generate_stage4_furnishing.py stage5/audit_stage5_scene.py stage6/validate_stage6_layout.py stage7/generate_stage7_branding.py stage8/generate_stage8_wayfinding.py stage9/generate_stage9_emblems.py stage10/generate_stage10_architectural_details.py stage11/generate_stage11_interior_details.py stage12/generate_stage12_doors_access.py stage13/generate_stage13_garage_circulation.py stage14/generate_stage14_exterior_access.py stage15/generate_stage15_site_security.py stage16/audit_stage16_structure.py stage17/audit_stage17_room_circulation.py stage18/generate_stage18_materials.py
+          test -f stage19/audit_stage19_export_preflight.py
+          test -f stage19/README.md
+          test -f stage19/COLLISION_AND_EXPORT_PREFLIGHT_CHECKLIST.md
+          python -m py_compile stage2/generate_stage2_blockout.py stage3/generate_stage3_interior.py stage4/generate_stage4_furnishing.py stage5/audit_stage5_scene.py stage6/validate_stage6_layout.py stage7/generate_stage7_branding.py stage8/generate_stage8_wayfinding.py stage9/generate_stage9_emblems.py stage10/generate_stage10_architectural_details.py stage11/generate_stage11_interior_details.py stage12/generate_stage12_doors_access.py stage13/generate_stage13_garage_circulation.py stage14/generate_stage14_exterior_access.py stage15/generate_stage15_site_security.py stage16/audit_stage16_structure.py stage17/audit_stage17_room_circulation.py stage18/generate_stage18_materials.py stage19/audit_stage19_export_preflight.py
 
       - name: Create ZIP
         run: |
           mkdir -p dist
-          zip -r dist/fivem_police_hq_stages_2_3_4_5_6_7_8_9_10_11_12_13_14_15_16_17_18.zip stage2 stage3 stage4 stage5 stage6 stage7 stage8 stage9 stage10 stage11 stage12 stage13 stage14 stage15 stage16 stage17 stage18
+          zip -r dist/fivem_police_hq_stages_2_3_4_5_6_7_8_9_10_11_12_13_14_15_16_17_18_19.zip stage2 stage3 stage4 stage5 stage6 stage7 stage8 stage9 stage10 stage11 stage12 stage13 stage14 stage15 stage16 stage17 stage18 stage19
 
       - name: Upload downloadable ZIP
         uses: actions/upload-artifact@v4
         with:
-          name: fivem-police-hq-stages-2-3-4-5-6-7-8-9-10-11-12-13-14-15-16-17-18
+          name: fivem-police-hq-stages-2-3-4-5-6-7-8-9-10-11-12-13-14-15-16-17-18-19
           path: dist/fivem_police_hq_stages_2_3_4_5_6_7_8_9_10_11_12_13_14_15_16_17_18.zip
           if-no-files-found: error
           retention-days: 30
