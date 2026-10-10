@@ -1,26 +1,11 @@
-# Stage 41 — Exterior architecture and façade detailing
+# Stages 41–48 — Generated design and optimization specification
 
-## Purpose
-Refine the modern HQ exterior into a coherent architectural system: entrance, glazing, cladding, secure service frontage, garage doors and roof edges.
+Run from the repository root:
 
-## Inputs
-- Approved Stage 36 room program and adjacency schedule.
-- Stage 37 fit-screen JSON and Stage 38 SVG previews.
-- The current Blender scene, reviewed and saved as a versioned copy.
+```bash
+python stage41/generate_stage41_48_design_specs.py --output build/stage41_48_design_spec.json
+```
 
-## Work sequence
-1. Review the current scene and record a baseline before editing.
-2. Make a small, reversible change set; preserve backups.
-3. Run relevant earlier audits and inspect the result visually.
-4. Record unresolved issues instead of silently accepting a heuristic pass.
-5. Do not export placeholders as production GTA assets.
+The generator produces room-specific interior kit, lighting intent, collision profile, material guidance, LOD/geometry checks, and streaming review requirements for all rooms in the Stage 36 program. It consumes Stage 37 placements if `build/stage37_floor_fit.json` exists; otherwise it clearly marks placements unavailable.
 
-## Acceptance criteria
-- [ ] Check front entry at negative Y
-- [ ] remove façade collisions
-- [ ] ensure garage doors align with vehicle approach
-- [ ] use modular details
-- [ ] review from street and approach cameras
-
-## Status boundary
-This stage is a production work package and acceptance gate. Repository presence or CI success does not mean the Blender/Sollumz/CodeWalker/FiveM work has been performed. Do not mark complete until the required external evidence exists.
+This is a design specification only. It does not create façade or interior geometry, texture files, collision meshes, LODs, Sollumz archetypes, or a working FiveM MLO. Keep `production_ready` false until external production and validation are complete.
