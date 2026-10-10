@@ -8,6 +8,7 @@ on:
       - "stage3/**"
       - "stage4/**"
       - "stage5/**"
+      - "stage6/**"
       - ".github/workflows/stage2-package.yml"
   workflow_dispatch:
 
@@ -36,17 +37,20 @@ jobs:
           test -f stage5/audit_stage5_scene.py
           test -f stage5/README.md
           test -f stage5/OPTIMIZATION_AND_EXPORT_PLAN.md
-          python -m py_compile stage2/generate_stage2_blockout.py stage3/generate_stage3_interior.py stage4/generate_stage4_furnishing.py stage5/audit_stage5_scene.py
+          test -f stage6/validate_stage6_layout.py
+          test -f stage6/README.md
+          test -f stage6/LAYOUT_VALIDATION_CHECKLIST.md
+          python -m py_compile stage2/generate_stage2_blockout.py stage3/generate_stage3_interior.py stage4/generate_stage4_furnishing.py stage5/audit_stage5_scene.py stage6/validate_stage6_layout.py
 
       - name: Create ZIP
         run: |
           mkdir -p dist
-          zip -r dist/fivem_police_hq_stages_2_3_4_5.zip stage2 stage3 stage4 stage5
+          zip -r dist/fivem_police_hq_stages_2_3_4_5_6.zip stage2 stage3 stage4 stage5 stage6
 
       - name: Upload downloadable ZIP
         uses: actions/upload-artifact@v4
         with:
-          name: fivem-police-hq-stages-2-3-4-5
-          path: dist/fivem_police_hq_stages_2_3_4_5.zip
+          name: fivem-police-hq-stages-2-3-4-5-6
+          path: dist/fivem_police_hq_stages_2_3_4_5_6.zip
           if-no-files-found: error
           retention-days: 30
