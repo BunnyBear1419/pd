@@ -45,6 +45,7 @@ AUDIT_STEPS_AFTER_MATERIALS = [
     ("Stage 20 LOD/performance review", "stage20/audit_stage20_lod_performance.py"),
     ("Stage 21 geometry cleanup review", "stage21/audit_stage21_geometry_cleanup.py"),
     ("Stage 22 visibility/streaming review", "stage22/audit_stage22_visibility_streaming.py"),
+    ("Stage 31 optimization/export manifest review", "stage31/audit_stage31_optimization_export_manifest.py"),
 ]
 
 
@@ -55,8 +56,8 @@ def parse_args():
     else:
         argv = []
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--output", default="build/pdhq_stage29_blockout.blend", help="Output .blend path")
-    parser.add_argument("--log", default="build/pdhq_stage30_build_report.json", help="Build report JSON path")
+    parser.add_argument("--output", default="build/pdhq_stage31_blockout.blend", help="Output .blend path")
+    parser.add_argument("--log", default="build/pdhq_stage31_build_report.json", help="Build report JSON path")
     parser.add_argument("--skip-audits", action="store_true", help="Skip audit scripts; generators still run")
     return parser.parse_args(argv)
 
@@ -87,7 +88,7 @@ def main():
         plan.extend(AUDIT_STEPS_AFTER_MATERIALS)
 
     report = {
-        "stage": 30,
+        "stage": 31,
         "started_utc": datetime.now(timezone.utc).isoformat(),
         "repository_root": str(ROOT),
         "output_blend": str(output),
@@ -116,7 +117,7 @@ def main():
 
         report["status"] = "BUILD_COMPLETED_REQUIRES_MANUAL_REVIEW"
         report["finished_utc"] = datetime.now(timezone.utc).isoformat()
-        block_name = "PDHQ_STAGE30_BUILD_REPORT"
+        block_name = "PDHQ_STAGE31_BUILD_REPORT"
         block = bpy.data.texts.get(block_name) or bpy.data.texts.new(block_name)
         block.clear()
         block.write(json.dumps(report, indent=2))
