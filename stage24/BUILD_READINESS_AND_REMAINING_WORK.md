@@ -2,7 +2,7 @@
 
 ## Repository-level checks
 
-- [ ] Confirm all stage directories and expected source files are present.
+- [ ] Confirm all stage directories and expected source files are present, including the Stage 29 room-clearance audit.
 - [ ] Confirm the packaging workflow includes every current stage and its required source files.
 - [ ] Run the Stage 24 audit from the repository root and review its JSON report.
 - [ ] Keep the successful GitHub Actions package as a source/documentation bundle, not as a claim of a finished MLO.
@@ -11,8 +11,8 @@
 
 - [ ] Open the project in a compatible Blender version and save a versioned `.blend` file.
 - [ ] Run generators in documented order on a backup and inspect the resulting scene after each major pass.
-- [ ] Resolve architectural issues: full-footprint slabs, stair/elevator openings, stair continuity, room access, doors, and roof/helipad circulation.
-- [ ] Inspect the provisional garage entry, vehicle turning/clearance, pedestrian separation, emergency lane, and service approach.
+- [ ] Resolve architectural issues: full-footprint slabs, stair/elevator openings, stair continuity, room access, doors, room dimensions, furniture clearances, and roof/helipad circulation.
+- [ ] Inspect the provisional garage entry, vehicle turning/clearance, secure transfer, room dimensions and door/furniture clearance, pedestrian separation, emergency lane, and service approach.
 - [ ] Confirm branding, signs, glazing, facade details, interior details, and furniture do not intersect or z-fight.
 - [ ] Decide which guide, placeholder, clearance, and audit objects are excluded from production export.
 - [ ] Review topology, normals, materials, UVs, object origins, transforms, collision candidates, and LOD priorities.
