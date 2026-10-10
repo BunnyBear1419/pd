@@ -39,17 +39,19 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--spec", default="build/stage41_48_design_spec.json")
     parser.add_argument("--fit-report", default="build/stage37_floor_fit.json")
+    parser.add_argument("--schedule", default="stage36/room_program_and_adjacency.json")
     parser.add_argument("--output", default="build/stage43_furniture_blockout.json")
     args = parser.parse_args()
     spec = json.loads(Path(args.spec).read_text(encoding="utf-8"))
     fit = json.loads(Path(args.fit_report).read_text(encoding="utf-8"))
+    schedule = json.loads(Path(args.schedule).read_text(encoding="utf-8"))
     if spec.get("stage_range") != "41-48" or not isinstance(spec.get("rooms"), list):
         raise SystemExit("Expected Stage 41-48 room design specification.")
     placements = {}
     for floor_data in fit.get("floor_results", {}).values():
         for p in floor_data.get("placements", []):
             placements[p["id"]] = p
-    floor_height = 3.6
+    floor_height = float(schedule["footprint_reference"]["floor_to_floor_height"])
     geometry, omitted = [], []
     for room in spec["rooms"]:
         rid, use = room.get("room_id"), room.get("use", "unknown")
@@ -61,20 +63,27 @@ def main():
             continue
         x, y, w, d = (float(p[k]) for k in ("x", "y", "width", "depth"))
         floor = int(p["floor"])
-        # Place only one conservative item by default; keep all placeholder masses
-        # near room center and omit items that cannot fit with a 0.25 m edge margin.
+        # Arrange the simple masses in a row rather than stacking every item at the
+        # same center. This is only a collision-reducing starting layout.
+        total_span = sum(item[1] for item in kit) + 0.2 * max(0, len(kit) - 1)
+        if total_span > w - 0.5:
+            omitted.extend({"room_id": rid, "use": use, "item": item[0], "reason": "kit row exceeds room clear width"} for item in kit)
+            continue
+        cursor_x = x + (w - total_span) / 2
         for item_name, sx, sy, sz in kit:
-            if sx > w - 0.5 or sy > d - 0.5:
-                omitted.append({"room_id": rid, "use": use, "item": item_name, "reason": "item exceeds room clear footprint"})
+            if sy > d - 0.5:
+                omitted.append({"room_id": rid, "use": use, "item": item_name, "reason": "item exceeds room clear depth"})
+                cursor_x += sx + 0.2
                 continue
-            cx, cy = x + w / 2, y + d / 2
+            cx, cy = cursor_x + sx / 2, y + d / 2
             cz = (floor - 1) * floor_height + sz / 2
             geometry.append({
                 "role": "furniture_placeholder", "name": f"Furn_{rid}_{item_name}",
                 "floor": floor, "center_m": [round(cx, 3), round(cy, 3), round(cz, 3)],
                 "size_m": [sx, sy, sz], "room_id": rid, "use": use,
-                "note": "Center-positioned schematic placeholder; relocate and clearance-check in Blender."
+                "note": "Row-arranged schematic placeholder; relocate and clearance-check in Blender."
             })
+            cursor_x += sx + 0.2
     out = Path(args.output)
     out.parent.mkdir(parents=True, exist_ok=True)
     report = {
