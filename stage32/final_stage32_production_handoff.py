@@ -47,7 +47,9 @@ STAGE_FILES = {
     37: ["stage37/audit_stage37_floor_fit.py", "stage37/README.md", "stage37/FLOOR_FIT_ACCEPTANCE_CHECKLIST.md"],
     38: ["stage38/generate_stage38_floorplan_preview.py", "stage38/README.md", "stage38/FLOORPLAN_REVIEW_CHECKLIST.md"],
     39: ["stage39/audit_stage39_adjacency.py", "stage39/README.md", "stage39/ROOM_ADJACENCY_AUDIT_CHECKLIST.md"],
-    40: ["stage40/README.md"],
+    40: ["stage40/generate_stage40_wall_door_schedule.py", "stage40/generate_stage40_wall_door_schedule.py",
+    "stage40/README.md",
+    "stage40/WALL_OPENING_DOOR_REVIEW_CHECKLIST.md", "stage40/WALL_OPENING_DOOR_REVIEW_CHECKLIST.md"],
     41: ["stage41/README.md"],
     42: ["stage42/README.md"],
     43: ["stage43/README.md"],
@@ -132,6 +134,7 @@ def main():
         "build/stage38-floorplans/floor_3.svg",
         "build/stage38-floorplans/roof_helipad.svg",
         "build/stage39_adjacency_report.json",
+        "build/stage40_wall_door_schedule.json",
         "resource/fxmanifest.lua",
         "resource/stream",
     ]
