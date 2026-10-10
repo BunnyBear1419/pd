@@ -174,7 +174,7 @@ jobs:
           test -f stage34/audit_stage34_architecture_geometry.py
           test -f stage34/README.md
           test -f stage34/ARCHITECTURE_GEOMETRY_ACCEPTANCE_CHECKLIST.md
-          test -f stage35/audit_stage35_floor_coordination.py
+          test -f stage35/audit_stage35_floor_coordination.py stage38/generate_stage38_floorplan_preview.py stage39/audit_stage39_adjacency.py stage40/generate_stage40_wall_door_schedule.py
           test -f stage35/README.md
           test -f stage35/FLOOR_COORDINATION_ACCEPTANCE_CHECKLIST.md
           test -f stage36/room_program_and_adjacency.json
@@ -191,6 +191,8 @@ jobs:
           test -f stage39/audit_stage39_adjacency.py
           test -f stage39/ROOM_ADJACENCY_AUDIT_CHECKLIST.md
           test -f stage40/README.md
+          test -f stage40/generate_stage40_wall_door_schedule.py
+          test -f stage40/WALL_OPENING_DOOR_REVIEW_CHECKLIST.md
           test -f stage41/README.md
           test -f stage42/README.md
           test -f stage43/README.md
@@ -231,6 +233,14 @@ jobs:
 
       - name: Verify Stage 39 report
         run: test -s build/stage39_adjacency_report.json
+
+      - name: Run Stage 40 wall and door coordination
+        run: python stage40/generate_stage40_wall_door_schedule.py --output build/stage40_wall_door_schedule.json
+
+      - name: Verify Stage 40 coordination report
+        run: |
+          test -s build/stage40_wall_door_schedule.json
+          python -c "import json; r=json.load(open('build/stage40_wall_door_schedule.json', encoding='utf-8')); assert r['stage'] == 40 and r['production_ready'] is False"
 
       - name: Create ZIP
         run: |
