@@ -24,8 +24,9 @@ def main():
     if not manifest_path.is_file():
         raise SystemExit(f"Manifest not found: {manifest_path}")
     manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
-    if manifest.get("stage") != 42 or not isinstance(manifest.get("geometry"), list):
-        raise SystemExit("Input is not a valid Stage 42 geometry manifest.")
+    stage_number = manifest.get("stage")
+    if stage_number not in (42, 43) or not isinstance(manifest.get("geometry"), list):
+        raise SystemExit("Input must be a Stage 42 shell or Stage 43 furniture blockout manifest.")
     if manifest.get("production_ready") is not False:
         raise SystemExit("Refusing import: manifest must explicitly remain marked not production-ready.")
 
@@ -60,16 +61,18 @@ def main():
         mesh.update()
         obj = bpy.data.objects.new(str(item.get("name") or f"Stage42_{index:04d}"), mesh)
         obj.location = tuple(float(v) for v in center)
-        obj["stage42_role"] = str(item.get("role", "unspecified"))
-        obj["stage42_floor"] = int(item.get("floor", 0))
+        obj["stage_blockout_stage"] = int(stage_number)
+        obj["stage_blockout_role"] = str(item.get("role", "unspecified"))
+        obj["stage_blockout_floor"] = int(item.get("floor", 0))
         if item.get("room_id") is not None:
-            obj["stage42_room_id"] = str(item["room_id"])
+            obj["stage_blockout_room_id"] = str(item["room_id"])
         collection.objects.link(obj)
         created += 1
 
-    collection["stage42_source_manifest"] = str(manifest_path)
-    collection["stage42_production_ready"] = False
-    print(json.dumps({"stage": 42, "collection": args.collection, "objects_created": created,
+    collection["stage_blockout_source_manifest"] = str(manifest_path)
+    collection["stage_blockout_stage"] = int(stage_number)
+    collection["stage_blockout_production_ready"] = False
+    print(json.dumps({"stage": stage_number, "collection": args.collection, "objects_created": created,
                       "production_ready": False, "note": "Schematic blockout only; review in Blender."}, indent=2))
 
 
