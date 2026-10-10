@@ -43,6 +43,7 @@ STAGE_FILES = {
     31: ["stage31/audit_stage31_optimization_export_manifest.py", "stage31/README.md"],
     34: ["stage34/audit_stage34_architecture_geometry.py", "stage34/README.md", "stage34/ARCHITECTURE_GEOMETRY_ACCEPTANCE_CHECKLIST.md"],
     35: ["stage35/audit_stage35_floor_coordination.py", "stage35/README.md", "stage35/FLOOR_COORDINATION_ACCEPTANCE_CHECKLIST.md"],
+    36: ["stage36/room_program_and_adjacency.json", "stage36/audit_stage36_room_program.py", "stage36/README.md", "stage36/ROOM_PROGRAM_ACCEPTANCE_CHECKLIST.md"],
 }
 REQUIRED_PROJECT_FILES = [
     ".github/workflows/stage2-package.yml",
@@ -53,6 +54,8 @@ REQUIRED_PROJECT_FILES = [
     "stage32/FINAL_PRODUCTION_HANDOFF_ACCEPTANCE_CHECKLIST.md",
     "stage34/ARCHITECTURE_GEOMETRY_ACCEPTANCE_CHECKLIST.md",
     "stage35/FLOOR_COORDINATION_ACCEPTANCE_CHECKLIST.md",
+    "stage36/room_program_and_adjacency.json",
+    "stage36/ROOM_PROGRAM_ACCEPTANCE_CHECKLIST.md",
 ]
 
 def inspect_path(root, relative):
@@ -99,7 +102,7 @@ def main():
         status = "EXTERNAL_VALIDATION_REQUIRED"
 
     report = {
-        "stage": 35,
+        "stage": 36,
         "generated_utc": datetime.now(timezone.utc).isoformat(),
         "repository_root": str(root),
         "status": status,
