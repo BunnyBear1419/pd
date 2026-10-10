@@ -61,15 +61,18 @@ def main():
 
     pad = by_name.get("HELIPAD_PLATFORM")
     pad_bounds = world_bounds(pad) if pad else None
-    hvac_findings = []
+    rooftop_obstacle_findings = []
+    obstacle_tokens = ("HVAC", "STAIR", "ELEVATOR", "ANTENNA", "PARAPET", "ROOF_ACCESS")
     for obj in objects:
-        if obj.name.startswith("HVAC_UNIT_") or obj.name.startswith("HVAC_BASE_"):
+        if any(token in obj.name.upper() for token in obstacle_tokens):
             bounds = world_bounds(obj)
-            hvac_findings.append({
-                "object": obj.name,
-                "bounds": bounds,
-                "overlaps_helipad_xy": bool(pad_bounds and intersects_xy(pad_bounds, bounds)),
-            })
+            if pad_bounds and intersects_xy(pad_bounds, bounds):
+                rooftop_obstacle_findings.append({
+                    "object": obj.name,
+                    "bounds": bounds,
+                    "overlaps_helipad_xy": True,
+                    "note": "Plan-view overlap candidate only; inspect actual vertical clearance and intended aircraft envelope.",
+                })
 
     collections = {}
     for name in GUIDE_COLLECTIONS:
@@ -80,15 +83,15 @@ def main():
         }
 
     missing = [item["check"] for item in checks if item["status"] == "MISSING"]
-    possible_hvac_conflicts = [item["object"] for item in hvac_findings if item["overlaps_helipad_xy"]]
+    possible_roof_conflicts = [item["object"] for item in rooftop_obstacle_findings]
     report = {
         "stage": 30,
         "purpose": "Advisory exterior/site/helipad review",
-        "status": "REVIEW_REQUIRED" if missing or possible_hvac_conflicts else "INVENTORY_COMPLETE_REVIEW_REQUIRED",
+        "status": "REVIEW_REQUIRED" if missing or possible_roof_conflicts else "INVENTORY_COMPLETE_REVIEW_REQUIRED",
         "checks": checks,
         "guide_collections": collections,
-        "helipad": {"bounds": pad_bounds, "hvac_xy_overlap_candidates": possible_hvac_conflicts},
-        "hvac_review": hvac_findings,
+        "helipad": {"bounds": pad_bounds, "potential_rooftop_obstacle_xy_overlap_candidates": possible_roof_conflicts},
+        "rooftop_obstacle_review": rooftop_obstacle_findings,
         "limitations": [
             "Axis-aligned bounds and object names are screening heuristics; false positives and false negatives are possible.",
             "No swept vehicle path, turning simulation, terrain grading, drainage, fire-engine access, or gate operation is computed.",
