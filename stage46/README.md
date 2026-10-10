@@ -1,26 +1,20 @@
-# Stage 46 — Collision and walkable-surface pass
+# Stage 46 — UV mapping and texture-atlas preparation
 
-## Purpose
-Prepare explicit collision review for floors, stairs, ramps, doors, railings, furniture and exterior approaches.
+Stage 46 creates a UV/atlas planning manifest and a read-only Blender audit for an actual scene.
 
-## Inputs
-- Approved Stage 36 room program and adjacency schedule.
-- Stage 37 fit-screen JSON and Stage 38 SVG previews.
-- The current Blender scene, reviewed and saved as a versioned copy.
+## Files
+- `generate_stage46_uv_plan.py`: creates atlas grouping and per-asset-class UV guidance from the Stage 45 material manifest.
+- `audit_stage46_uvs_blender.py`: run inside Blender to report missing active UV layers, UV coordinates outside 0–1, zero-area polygons, and high material-slot counts. It does not change meshes.
 
-## Work sequence
-1. Review the current scene and record a baseline before editing.
-2. Make a small, reversible change set; preserve backups.
-3. Run relevant earlier audits and inspect the result visually.
-4. Record unresolved issues instead of silently accepting a heuristic pass.
-5. Do not export placeholders as production GTA assets.
+## Run the plan
+```bash
+python stage45/generate_stage45_material_manifest.py --output build/stage45_material_manifest.json
+python stage46/generate_stage46_uv_plan.py --materials build/stage45_material_manifest.json --output build/stage46_uv_atlas_plan.json
+```
 
-## Acceptance criteria
-- [ ] Walk all paths in game
-- [ ] collision surfaces cover walkable areas
-- [ ] no snagging or invisible barriers
-- [ ] verify vehicle collision in garage
-- [ ] inspect edge fall-through
+## Audit a real Blender scene
+```bash
+blender --background path/to/your_scene.blend --python stage46/audit_stage46_uvs_blender.py -- --output build/stage46_uv_audit.json
+```
 
-## Status boundary
-This stage is a production work package and acceptance gate. Repository presence or CI success does not mean the Blender/Sollumz/CodeWalker/FiveM work has been performed. Do not mark complete until the required external evidence exists.
+The audit is intentionally read-only. UVs outside 0–1 may be intentional for tiling, and overlapping UV islands may be correct for mirrored/reused assets. Review flagged objects before editing. This stage does not create texture images, unwrap meshes, or export GTA assets. Use a versioned scene copy and validate in Sollumz/CodeWalker/FiveM before treating anything as production-ready.
