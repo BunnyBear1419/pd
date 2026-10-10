@@ -14,6 +14,14 @@ This stage adds a repeatable entry point for generating the schematic PDHQ scene
 blender -b --python stage25/build_stage25_scene.py -- --output build/pdhq_stage31_blockout.blend --log build/pdhq_stage31_build_report.json
 ```
 
+If the target `.blend` already exists, the runner now refuses to overwrite it unless you explicitly opt in. To replace it while preserving a timestamped backup first:
+
+```powershell
+blender -b --python stage25/build_stage25_scene.py -- --output build/pdhq_stage31_blockout.blend --log build/pdhq_stage31_build_report.json --overwrite
+```
+
+Prefer a new versioned output filename for the first run. Stage 2 resets the scene objects and rebuilds the blockout, so only run the generator against a copy of any scene you want to preserve.
+
 To generate without running the audit scripts:
 
 ```powershell
