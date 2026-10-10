@@ -37,6 +37,7 @@ REQUIRED_FILES = {
     "Stage 27 room circulation audit": "stage27/audit_stage27_room_circulation.py",
     "Stage 28 garage/secure layout audit": "stage28/audit_stage28_garage_secure_layout.py",
     "Stage 29 room clearance audit": "stage29/audit_stage29_room_clearances.py",
+    "Stage 30 exterior/helipad audit": "stage30/audit_stage30_exterior_helipad_clearance.py",
     "Packaging workflow": ".github/workflows/stage2-package.yml",
 }
 REQUIRED_DOCS = {
@@ -52,6 +53,7 @@ REQUIRED_DOCS = {
     "Stage 27 circulation acceptance checklist": "stage27/ROOM_CIRCULATION_ACCEPTANCE_CHECKLIST.md",
     "Stage 28 garage/secure acceptance checklist": "stage28/GARAGE_SECURE_LAYOUT_ACCEPTANCE_CHECKLIST.md",
     "Stage 29 room/door clearance checklist": "stage29/ROOM_DIMENSIONS_DOOR_CLEARANCE_ACCEPTANCE_CHECKLIST.md",
+    "Stage 30 exterior/helipad checklist": "stage30/EXTERIOR_SITE_EMERGENCY_ACCESS_HELIPAD_ACCEPTANCE_CHECKLIST.md",
 }
 
 
@@ -63,7 +65,7 @@ def main():
     root = Path(args.root).expanduser().resolve()
     missing_files = [{"label": label, "path": path} for label, path in REQUIRED_FILES.items() if not (root / path).is_file()]
     missing_docs = [{"label": label, "path": path} for label, path in REQUIRED_DOCS.items() if not (root / path).is_file()]
-    stage_dirs = [f"stage{i}" for i in range(2, 30)]
+    stage_dirs = [f"stage{i}" for i in range(2, 31)]
     present_stages = [name for name in stage_dirs if (root / name).is_dir()]
     absent_stages = [name for name in stage_dirs if not (root / name).is_dir()]
     workflow_text = ""
@@ -74,6 +76,8 @@ def main():
         "mentions_stage23": "stage23/" in workflow_text,
         "mentions_stage28": "stage28/" in workflow_text,
         "mentions_stage29": "stage29/" in workflow_text,
+        "mentions_stage30": "stage30/" in workflow_text,
+        "includes_stage30_in_zip": "stage30" in workflow_text.split("- name: Create ZIP", 1)[-1],
         "includes_stage23_in_zip": "stage23\n" in workflow_text or "stage23" in workflow_text.split("- name: Create ZIP", 1)[-1],
         "artifact_upload_step_present": "actions/upload-artifact@v4" in workflow_text,
     }
