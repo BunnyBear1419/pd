@@ -188,6 +188,8 @@ jobs:
           test -f stage38/README.md
           test -f stage38/FLOORPLAN_REVIEW_CHECKLIST.md
           test -f stage39/README.md
+          test -f stage39/audit_stage39_adjacency.py
+          test -f stage39/ROOM_ADJACENCY_AUDIT_CHECKLIST.md
           test -f stage40/README.md
           test -f stage41/README.md
           test -f stage42/README.md
@@ -223,6 +225,12 @@ jobs:
           test -f build/stage38-floorplans/floor_3.svg
           test -f build/stage38-floorplans/roof_helipad.svg
           test -f build/stage38-floorplans/stage38_summary.json
+
+      - name: Run Stage 39 room-adjacency audit
+        run: python stage39/audit_stage39_adjacency.py --output build/stage39_adjacency_report.json
+
+      - name: Verify Stage 39 report
+        run: test -s build/stage39_adjacency_report.json
 
       - name: Create ZIP
         run: |
