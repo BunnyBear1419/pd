@@ -35,6 +35,7 @@ AUDIT_STEPS_BEFORE_MATERIALS = [
     ("Stage 6 layout validation", "stage6/validate_stage6_layout.py"),
     ("Stage 16 structural/circulation audit", "stage16/audit_stage16_structure.py"),
     ("Stage 17 room/circulation audit", "stage17/audit_stage17_room_circulation.py"),
+    ("Stage 27 room layout/circulation review", "stage27/audit_stage27_room_circulation.py"),
 ]
 AUDIT_STEPS_AFTER_MATERIALS = [
     ("Stage 19 export preflight", "stage19/audit_stage19_export_preflight.py"),
@@ -51,8 +52,8 @@ def parse_args():
     else:
         argv = []
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--output", default="build/pdhq_stage26_blockout.blend", help="Output .blend path")
-    parser.add_argument("--log", default="build/pdhq_stage26_build_report.json", help="Build report JSON path")
+    parser.add_argument("--output", default="build/pdhq_stage27_blockout.blend", help="Output .blend path")
+    parser.add_argument("--log", default="build/pdhq_stage27_build_report.json", help="Build report JSON path")
     parser.add_argument("--skip-audits", action="store_true", help="Skip audit scripts; generators still run")
     return parser.parse_args(argv)
 
@@ -83,7 +84,7 @@ def main():
         plan.extend(AUDIT_STEPS_AFTER_MATERIALS)
 
     report = {
-        "stage": 26,
+        "stage": 27,
         "started_utc": datetime.now(timezone.utc).isoformat(),
         "repository_root": str(ROOT),
         "output_blend": str(output),
@@ -112,13 +113,13 @@ def main():
 
         report["status"] = "BUILD_COMPLETED_REQUIRES_MANUAL_REVIEW"
         report["finished_utc"] = datetime.now(timezone.utc).isoformat()
-        block_name = "PDHQ_STAGE26_BUILD_REPORT"
+        block_name = "PDHQ_STAGE27_BUILD_REPORT"
         block = bpy.data.texts.get(block_name) or bpy.data.texts.new(block_name)
         block.clear()
         block.write(json.dumps(report, indent=2))
         bpy.ops.wm.save_as_mainfile(filepath=str(output))
         write_report(log_path, report)
-        print("\n[PDHQ Stage 25] Saved Blender project: " + str(output), flush=True)
+        print("\n[PDHQ Build] Saved Blender project: " + str(output), flush=True)
         print("[PDHQ Stage 25] Saved build report: " + str(log_path), flush=True)
         print("[PDHQ Stage 25] Build scripts completed; inspect the scene and audit findings before export.", flush=True)
     except Exception as exc:
