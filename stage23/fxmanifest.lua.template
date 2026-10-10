@@ -1,0 +1,12 @@
+-- Stage 23 template only. Copy into the final resource root as fxmanifest.lua.
+-- Replace placeholder paths and review data_file entries against actual Sollumz exports.
+fx_version 'cerulean'
+game 'gta5'
+
+this_is_a_map 'yes'
+
+-- Example only: uncomment and replace with the exact exported YTYP path if present.
+-- data_file 'DLC_ITYP_REQUEST' 'stream/your_map.ytyp'
+
+-- GTA assets are normally placed beneath stream/.
+-- Do not add wildcard data_file entries unless confirmed supported for the specific asset type.
