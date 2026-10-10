@@ -1,7 +1,7 @@
 """Stage 25: repeatable Blender scene build and audit orchestration.
 
 Run from the repository root:
-  blender -b --python stage25/build_stage25_scene.py -- --output build/pdhq_stage25_blockout.blend
+  blender -b --python stage25/build_stage25_scene.py -- --output build/pdhq_stage29_blockout.blend
 
 This generates a schematic Blender blockout and runs non-destructive audits.
 It is not a GTA/Sollumz exporter and does not certify a production MLO.
@@ -37,6 +37,7 @@ AUDIT_STEPS_BEFORE_MATERIALS = [
     ("Stage 17 room/circulation audit", "stage17/audit_stage17_room_circulation.py"),
     ("Stage 27 room layout/circulation review", "stage27/audit_stage27_room_circulation.py"),
     ("Stage 28 garage/secure ground-floor review", "stage28/audit_stage28_garage_secure_layout.py"),
+    ("Stage 29 room/door/furniture clearance review", "stage29/audit_stage29_room_clearances.py"),
 ]
 AUDIT_STEPS_AFTER_MATERIALS = [
     ("Stage 19 export preflight", "stage19/audit_stage19_export_preflight.py"),
@@ -53,8 +54,8 @@ def parse_args():
     else:
         argv = []
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--output", default="build/pdhq_stage28_blockout.blend", help="Output .blend path")
-    parser.add_argument("--log", default="build/pdhq_stage28_build_report.json", help="Build report JSON path")
+    parser.add_argument("--output", default="build/pdhq_stage29_blockout.blend", help="Output .blend path")
+    parser.add_argument("--log", default="build/pdhq_stage29_build_report.json", help="Build report JSON path")
     parser.add_argument("--skip-audits", action="store_true", help="Skip audit scripts; generators still run")
     return parser.parse_args(argv)
 
@@ -85,7 +86,7 @@ def main():
         plan.extend(AUDIT_STEPS_AFTER_MATERIALS)
 
     report = {
-        "stage": 28,
+        "stage": 29,
         "started_utc": datetime.now(timezone.utc).isoformat(),
         "repository_root": str(ROOT),
         "output_blend": str(output),
@@ -114,7 +115,7 @@ def main():
 
         report["status"] = "BUILD_COMPLETED_REQUIRES_MANUAL_REVIEW"
         report["finished_utc"] = datetime.now(timezone.utc).isoformat()
-        block_name = "PDHQ_STAGE28_BUILD_REPORT"
+        block_name = "PDHQ_STAGE29_BUILD_REPORT"
         block = bpy.data.texts.get(block_name) or bpy.data.texts.new(block_name)
         block.clear()
         block.write(json.dumps(report, indent=2))
