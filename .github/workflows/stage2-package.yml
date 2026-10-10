@@ -177,12 +177,12 @@ jobs:
       - name: Create ZIP
         run: |
           mkdir -p dist
-          zip -r dist/fivem_police_hq_stages_2_3_4_5_6_7_8_9_10_11_12_13_14_15_16_17_18_19_20_21_22_23_24_25_26_27_28_29_30_31_32_33_34_35_36_37.zip stage2 stage3 stage4 stage5 stage6 stage7 stage8 stage9 stage10 stage11 stage12 stage13 stage14 stage15 stage16 stage17 stage18 stage19 stage20 stage21 stage22 stage23 stage24 stage25 stage26 stage27 stage28 stage29 stage30 stage31 stage32 stage33 stage34 stage35 stage36
+          zip -r dist/fivem_police_hq_stages_2_3_4_5_6_7_8_9_10_11_12_13_14_15_16_17_18_19_20_21_22_23_24_25_26_27_28_29_30_31_32_33_34_35_36_37.zip stage2 stage3 stage4 stage5 stage6 stage7 stage8 stage9 stage10 stage11 stage12 stage13 stage14 stage15 stage16 stage17 stage18 stage19 stage20 stage21 stage22 stage23 stage24 stage25 stage26 stage27 stage28 stage29 stage30 stage31 stage32 stage33 stage34 stage35 stage36 stage37
 
       - name: Upload downloadable ZIP
         uses: actions/upload-artifact@v4
         with:
-          name: fivem-police-hq-stages-2-3-4-5-6-7-8-9-10-11-12-13-14-15-16-17-18-19-20-21-22-23-24-25-26-27-28-29-30-31-32-33-34-35-36
+          name: fivem-police-hq-stages-2-3-4-5-6-7-8-9-10-11-12-13-14-15-16-17-18-19-20-21-22-23-24-25-26-27-28-29-30-31-32-33-34-35-36-37
           path: dist/fivem_police_hq_stages_2_3_4_5_6_7_8_9_10_11_12_13_14_15_16_17_18_19_20_21_22_23_24_25_26_27_28_29_30_31_32_33_34_35_36.zip
           if-no-files-found: error
           retention-days: 30
