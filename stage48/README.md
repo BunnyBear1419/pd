@@ -1,20 +1,23 @@
-# Stage 48 — Streaming, visibility and MLO boundaries
+# Stage 48 — Integrated pre-export review
 
-## Purpose
-Prepare room/portal/occlusion and streaming boundaries using the selected Sollumz/GTA workflow where appropriate.
+Stage 48 ties the Stage 42–47 planning outputs together and creates a machine-readable pre-export report.
 
-## Workflow
-1. Back up the last accepted Blender scene and exported resource.
-2. Use the approved outputs of Stages 36–38 as review references, not as authoritative construction plans.
-3. Complete the work in the real Blender/Sollumz/CodeWalker/FiveM toolchain.
-4. Run applicable audits, inspect findings manually, and retain evidence.
+## Generate the report
+```bash
+python stage48/audit_stage48_pre_export.py --root . --output build/stage48_pre_export_report.json
+```
 
-## Acceptance checklist
-- [ ] Test room transitions and interior/exterior visibility
-- [ ] verify no room leaks or disappearance
-- [ ] test joining, respawning, reconnecting and multiple clients
-- [ ] Record tool versions, evidence, defects, reviewer and date.
-- [ ] Do not treat CI/package success as proof of external toolchain or in-game validity.
+The report checks that each expected JSON manifest exists, has the expected stage marker, remains explicitly not production-ready, and contains its expected collection/count field. Missing or malformed inputs are listed as blockers.
 
-## Status boundary
-This stage defines the work package and acceptance gate. It is not complete until the real work and evidence exist. Do not claim production readiness without successful export, CodeWalker inspection and FiveM testing.
+## What this does not do
+It does not combine geometry inside Blender, create GTA MLO archetypes or portals, convert materials to GTA shaders, generate collision, or export a resource. Those tasks require the real Blender/Sollumz/CodeWalker workflow and then in-game FiveM validation.
+
+## Human acceptance checklist
+- [ ] Inspect the saved Blender scene, collections and transforms.
+- [ ] Review actual mesh UVs, materials, collision and LODs.
+- [ ] Verify doorways, stairs, garage turning/entry clearance, roof and helipad access.
+- [ ] Export and inspect actual assets in CodeWalker.
+- [ ] Test visibility/streaming on join, spawn, respawn, reconnect, resource restart and multiple clients.
+- [ ] Record performance measurements, defects, tool versions, reviewer and rollback instructions.
+
+**Status boundary:** report generation and CI success validate the planning package only. Stage 48 remains not production-ready until external evidence is reviewed.
