@@ -45,6 +45,24 @@ STAGE_FILES = {
     35: ["stage35/audit_stage35_floor_coordination.py", "stage35/README.md", "stage35/FLOOR_COORDINATION_ACCEPTANCE_CHECKLIST.md"],
     36: ["stage36/room_program_and_adjacency.json", "stage36/audit_stage36_room_program.py", "stage36/README.md", "stage36/ROOM_PROGRAM_ACCEPTANCE_CHECKLIST.md"],
     37: ["stage37/audit_stage37_floor_fit.py", "stage37/README.md", "stage37/FLOOR_FIT_ACCEPTANCE_CHECKLIST.md"],
+    38: ["stage38/generate_stage38_floorplan_preview.py", "stage38/README.md", "stage38/FLOORPLAN_REVIEW_CHECKLIST.md"],
+    39: ["stage39/README.md"],
+    40: ["stage40/README.md"],
+    41: ["stage41/README.md"],
+    42: ["stage42/README.md"],
+    43: ["stage43/README.md"],
+    44: ["stage44/README.md"],
+    45: ["stage45/README.md"],
+    46: ["stage46/README.md"],
+    47: ["stage47/README.md"],
+    48: ["stage48/README.md"],
+    49: ["stage49/README.md"],
+    50: ["stage50/README.md"],
+    51: ["stage51/README.md"],
+    52: ["stage52/README.md"],
+    53: ["stage53/README.md"],
+    54: ["stage54/README.md"],
+    55: ["stage55/README.md"],
 }
 REQUIRED_PROJECT_FILES = [
     ".github/workflows/stage2-package.yml",
@@ -58,6 +76,26 @@ REQUIRED_PROJECT_FILES = [
     "stage36/room_program_and_adjacency.json",
     "stage36/ROOM_PROGRAM_ACCEPTANCE_CHECKLIST.md",
     "stage37/FLOOR_FIT_ACCEPTANCE_CHECKLIST.md",
+    "stage38/generate_stage38_floorplan_preview.py",
+    "stage38/README.md",
+    "stage38/FLOORPLAN_REVIEW_CHECKLIST.md",
+    "stage39/README.md",
+    "stage40/README.md",
+    "stage41/README.md",
+    "stage42/README.md",
+    "stage43/README.md",
+    "stage44/README.md",
+    "stage45/README.md",
+    "stage46/README.md",
+    "stage47/README.md",
+    "stage48/README.md",
+    "stage49/README.md",
+    "stage50/README.md",
+    "stage51/README.md",
+    "stage52/README.md",
+    "stage53/README.md",
+    "stage54/README.md",
+    "stage55/README.md",
 ]
 
 def inspect_path(root, relative):
@@ -86,6 +124,11 @@ def main():
     expected_outputs = [
         "build/pdhq_stage35_blockout.blend",
         "build/pdhq_stage35_build_report.json",
+        "build/stage38-floorplans/index.html",
+        "build/stage38-floorplans/floor_1.svg",
+        "build/stage38-floorplans/floor_2.svg",
+        "build/stage38-floorplans/floor_3.svg",
+        "build/stage38-floorplans/roof_helipad.svg",
         "resource/fxmanifest.lua",
         "resource/stream",
     ]
@@ -104,7 +147,7 @@ def main():
         status = "EXTERNAL_VALIDATION_REQUIRED"
 
     report = {
-        "stage": 37,
+        "stage": 55,
         "generated_utc": datetime.now(timezone.utc).isoformat(),
         "repository_root": str(root),
         "status": status,
@@ -117,7 +160,7 @@ def main():
         "missing_project_files": missing_project,
         "missing_expected_outputs": missing_outputs,
         "required_manual_gates": [
-            "Generate and inspect a versioned Blender scene; review Stage 24-31 audit findings.",
+            "Generate and inspect a versioned Blender scene; review Stage 24-31 audit findings and Stage 38 floor-plan previews.",
             "Resolve geometry, room/door/furniture clearance, topology, transforms, UVs, materials, and guide/proxy cleanup.",
             "Use a compatible Sollumz workflow to author real GTA archetypes, collision, portals/occlusion, and LODs as appropriate.",
             "Export actual assets and inspect them in CodeWalker; verify the real fxmanifest.lua and stream paths.",
